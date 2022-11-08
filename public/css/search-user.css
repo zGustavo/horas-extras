@@ -1,0 +1,24 @@
+:root {
+    --bg-light: #f7f7f7;
+    --primary: #8a40b4;
+}
+
+#found-user {
+    background-color: var(--bg-light);
+}
+.modal-req-hour {
+    background-color: var(--primary);
+    color: var(--bg-light);
+}
+
+#modalHora {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#modal-body {
+    background-color: var(--bg-light);
+}
+
+textarea {
+    resize: none;
+}

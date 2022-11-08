@@ -1,0 +1,39 @@
+<aside
+  class="d-flex align-items-center justify-content-center flex-column p-5 vh-100 w-fit"
+>
+  <div class="logo-menu">
+    <img src="/assets/img/logo.png" alt="logo" />
+  </div>
+  <div class="wrapper">
+    <div
+      class="nav-header d-flex align-items-center justify-content-center flex-column p-4 border-bottom mb-4"
+    >
+      <div class="text-muted fs-6 text-left">Bem-vindo(a),</div>
+      <div class="nav-title fs-4 text-center mb-3">
+        <span><%= user.name.split(' ')[0].toUpperCase() %></span>
+      </div>
+      <div class="mb-3 text-muted text-left" id="nav-matricula">
+        MATRICULA: <%= user.matricula %>
+      </div>
+    </div>
+    <div class="menu-items">
+      <ul class="list-group d-flex align-items-start justify-content-center">
+        <li class="mb-3">
+          <a href="/sistemas/horas-extras/admin/relatorios" class="text-dark">
+            <i class="bi bi-file-earmark-excel"></i> RELATÓRIOS
+          </a>
+        </li>
+        <li class="mb-3">
+          <a href="/sistemas/horas-extras/admin/relatorios" class="text-dark">
+            <i class="bi bi-building"></i> SETOR/SECRETARIA
+          </a>
+        </li>
+        <li class="mb-3">
+          <a href="/sistemas/horas-extras/admin/relatorios" class="text-dark">
+            <i class="bi bi-person-plus"></i> FUNCIONÁRIOS
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</aside>

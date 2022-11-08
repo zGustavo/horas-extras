@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/cddaf0c0ff.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,700;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,300;1,700&family=Poppins:wght@200;300;400;500;600;700&family=Roboto+Flex:opsz,wght@8..144,300;8..144,500;8..144,700;8..144,900&family=Roboto:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <title>Dashboard | Pref. de Salto</title>
+  </head>
+  <body id="top" class="bg-light">
+    <div class="container-fluid">
+      <%- include('../../layout/header') %>
+      <div class="row mb-3 p-lg-5">
+        <div
+          class="container-fluid col-lg-10 d-flex align-items-center justify-content-center p-3 flex-column"
+          id="content"
+        >
+          <!-- CONTEUDO -->
+
+          <div class="mt-1 mb-1" id="title">
+            <div class="text-dark fs-1 fw-bold">
+              <span>DASHBOARD</span>
+            </div>
+          </div>
+
+          <div class="container-fluid px-3 py-3">
+            <div
+              class="row w-100 d-flex align-items-center justify-content-center flex-lg-nowrap"
+              id="box"
+            >
+              <div
+                class="col-lg-3 col-sm-12 mx-1 align-self-center d-flex align-items-center justify-content-start flex-column shadow-sm-1 p-3 h-100 card-all-section"
+                id="container"
+              >
+                <div class="mb-3 w-100 text-center">
+                  <p class="text-dark fw-bold fs-3">RELATÓRIO FUNCIONÁRIOS</p>
+                </div>
+                <form class="mb-3 w-100" id="admin-setor">
+                  <div class="mb-3 w-100">
+                    <label
+                      for="sel-setores"
+                      class="form-label w-100 fw-bold fs-4"
+                      style="color: #8a40b4"
+                    >
+                      ESCOLHA FUNCIONÁRIO:
+                    </label>
+                    <select name="setor" id="sel-func" class="w-100">
+                      <option value="null" selected></option>
+                      <% for( let i = 0; i < func.length; i++ ) { %>
+                      <option value="<%= func[i].id %>">
+                        <%= func[i].nome %>
+                      </option>
+                      <% } %>
+                    </select>
+                  </div>
+                  <div class="w-100 mb-3">
+                    <div class="w-100 text-start">
+                      <p class="fw-bold fs-4" style="color: #8a40b4">FILTRO:</p>
+                    </div>
+                    <div class="time">
+                      <div class="time-title p-2">
+                        <p class="text-dark fw-bold">TEMPO:</p>
+                        <div class="form-check form-check-inline">
+                          <input
+                            type="radio"
+                            name="filter"
+                            id="all"
+                            class="form-check-input"
+                            value="all"
+                            checked
+                          />
+                          <label for="all" class="form-check-label">TUDO</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            type="radio"
+                            name="filter"
+                            id="mes"
+                            class="form-check-input"
+                            value="mes"
+                          />
+                          <label for="mes" class="form-check-label"
+                            >MÊS ATUAL</label
+                          >
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            type="radio"
+                            name="filter"
+                            id="ano"
+                            class="form-check-input"
+                            value="ano"
+                          />
+                          <label for="ano" class="form-check-label"
+                            >ANO ATUAL</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="w-100 mb-3 mt-3">
+                      <button
+                        type="button"
+                        class="btn w-100 p-3 fw-bold rounded"
+                        style="background-color: #8a40b4; color: #f7f7f7"
+                        id="v-setor"
+                      >
+                        VISUALIZAR RESULTADO
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div
+                class="col-lg-3 col-sm-12 m-2 align-self-center d-flex h-100 align-items-center justify-content-start flex-column shadow-sm-1 p-3 h-100 card-all-section"
+                id="container"
+              >
+                <div class="mb-3 w-100 text-center">
+                  <p class="text-dark fw-bold fs-3 p-5">
+                    CADASTRO FUNCIONÁRIOS
+                  </p>
+                </div>
+                <div
+                  class="text-muted d-flex align-items-center fs-4 my-5 p-1 mb-3 justify-content-center"
+                >
+                  Aqui você pode criar e editar funcionários no sistema.
+                </div>
+                <div class="w-100">
+                  <button
+                    class="btn w-100 fw-bold p-3 my-4 cad-func-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#cad-func"
+                  >
+                    ABRIR FORMULÁRIO.
+                  </button>
+                </div>
+              </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      id="live-alert"
+      class="fixed-bottom bottom-0 start-50 translate-middle-x"
+    ></div>
+    <div
+      class="d-none position-fixed top-50 start-50 translate-middle bg-light shadow p-3"
+      id="rel-modal"
+    >
+      <div class="text-center fw-bold fs-4 text-dark">
+        ESPELHO DE RELATÓRIO:
+      </div>
+      <div class="my-modal-title"></div>
+      <div class="text-muted modal-filter-info"></div>
+      <div class="table-responsive wrapper-body"></div>
+      <div
+        class="w-100 mt-3 d-flex align-items-center justify-content-end my-modal-footer"
+      >
+        <button type="button" class="btn m-2" id="generate_xlsx">
+          GERAR RELATÓRIO
+        </button>
+        <button type="button" class="btn" id="close-modal">FECHAR</button>
+      </div>
+    </div>
+    <div class="modal" tabindex="-1" id="cad-func">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">CADASTRO/ATUALIZAÇÃO FUNCIONÁRIOS</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="cad-func-form">
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="mat" class="form-label">MATRICULA:</label>
+                  <input
+                    type="text"
+                    name="mat"
+                    id="mat"
+                    class="form-control num"
+                    required
+                  />
+                </div>
+                <div class="col mb-3">
+                  <label for="name" class="form-label">NOME:</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="cpf" class="form-label">CPF:</label>
+                  <input
+                    type="text"
+                    name="cpf"
+                    id="cpf"
+                    class="form-control"
+                    onblur="formatCpf()"
+                    required
+                  />
+                </div>
+                <div class="col mb-3">
+                  <label for="data-nascimento" class="form-label"
+                    >DATA NASCIMENTO:</label
+                  >
+                  <input
+                    type="date"
+                    name="dataNascimento"
+                    id="data-nascimento"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="col mb-3">
+                  <label for="senha" class="form-label">SENHA:</label>
+                  <input
+                    type="password"
+                    name="senha"
+                    id="senha"
+                    class="form-control"
+                  />
+                  <div class="toggle-pass-visibility">
+                    <i class="bi bi-eye-slash-fill"></i>
+                  </div>
+                </div>
+                <div class="col mb-3">
+                  <label for="data-admissao" class="form-label"
+                    >DATA ADMISSÃO:</label
+                  >
+                  <input
+                    type="date"
+                    name="data-admissao"
+                    id="data-admissao"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="cargo-comissao" class="form-label"
+                    >CARGO COMISSÃO:</label
+                  >
+                  <input
+                    type="text"
+                    name="cargoComissao"
+                    id="cargo-comissao"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="col mb-3">
+                  <label for="cargo-origem" class="form-label"
+                    >CARGO ORIGEM:</label
+                  >
+                  <input
+                    type="text"
+                    name="cargoOrigem"
+                    id="cargo-origem"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="col mb-3">
+                  <label for="vinculo" class="form-label">VINCULO:</label>
+                  <input
+                    type="text"
+                    name="vinculo"
+                    id="vinculo"
+                    class="form-control"
+                    placeholder="PADRÃO: EFETIVO - CLT"
+                  />
+                </div>
+                <div class="col mb-3">
+                  <label for="setID" class="form-label">ID SETOR:</label>
+                  <input
+                    type="text"
+                    name="setID"
+                    id="setID"
+                    class="form-control num"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="salario-efetivo" class="form-label"
+                    >SÁLARIO EFETIVO:</label
+                  >
+                  <input
+                    type="number"
+                    name="salarioEfetivo"
+                    id="salario-efetivo"
+                    class="form-control num"
+                    required
+                  />
+                </div>
+                <div class="col mb-3">
+                  <label for="salario-comissao" class="form-label"
+                    >SÁLARIO COMISSÃO:</label
+                  >
+                  <input
+                    type="number"
+                    name="salarioComissao"
+                    id="salario-comissao"
+                    class="form-control num"
+                    required
+                  />
+                </div>
+                <div class="col mb-3">
+                  <label for="telefone" class="form-label">TELEFONE:</label>
+                  <input
+                    type="text"
+                    name="telefone"
+                    id="telefone"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="col mb-3">
+                  <label for="level" class="form-label">NÍVEL DE CONTA:</label>
+                  <input
+                    type="text"
+                    name="level"
+                    id="level"
+                    class="form-control num"
+                    required
+                  />
+                </div>
+              </div>
+            </form>
+            <div
+              class="text-center p-2 fs-6"
+              id="func-cad-modal__feedback"
+            ></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn fw-bold px-5 py-2 btn-cad">
+              CADASTRAR
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/dashboard.js"></script>
+  </body>
+</html>

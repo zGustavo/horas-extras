@@ -1,0 +1,27 @@
+:root {
+  --bg-light: #f7f7f7;
+  --primary: #8a40b4;
+}
+
+h1 {
+  color: var(--primary);
+}
+
+#hora-form {
+  background-color: var(--bg-light);
+}
+
+textarea {
+  resize: none;
+}
+
+#add,
+#BtnSubmit,
+#clear {
+  background-color: var(--primary);
+  border: none;
+}
+
+#form-day-group input.invalid {
+  border: 1px solid red;
+}

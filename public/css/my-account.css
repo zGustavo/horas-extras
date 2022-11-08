@@ -1,0 +1,23 @@
+:root {
+  --bg-light: #f7f7f7;
+  --primary: #8a40b4;
+}
+
+h1 {
+  color: var(--primary);
+}
+
+.account-content {
+  width: 85%;
+}
+
+@media screen and (max-width: 897px) {
+  .account-content {
+    width: 100%;
+    padding: 0;
+  }
+
+  .row {
+    padding: 0;
+  }
+}

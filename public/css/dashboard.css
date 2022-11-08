@@ -1,0 +1,90 @@
+:root {
+  --bg-light: #f7f7f7;
+  --primary: #8a40b4;
+}
+
+.card-all-section {
+  background-color: var(--bg-light);
+  max-height: 500px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.primary-text-color {
+  color: var(--primary);
+}
+
+.toggle-pass-visibility {
+  font-size: 12px;
+  position: relative;
+  bottom: 38px;
+  left: 130px;
+  color: var(--bg-light);
+  cursor: pointer;
+}
+
+.toggle-pass-visibility i {
+  color: #b4b4b4;
+}
+
+.cad-func-btn {
+  background-color: var(--primary);
+  color: var(--bg-light);
+}
+
+.select-opt {
+  background-color: var(--bg-light);
+}
+
+#rel-modal {
+  background-color: var(--bg-light);
+  border: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+}
+
+#rel-modal p {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.wrapper-body {
+  max-height: 400px;
+  height: fit-content;
+  overflow-y: auto;
+}
+
+#generate_xlsx {
+  background-color: var(--primary);
+  color: var(--bg-light);
+}
+#close-modal {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.btn-cad {
+  background-color: var(--primary);
+  color: var(--bg-light);
+}
+
+@media screen and (min-width: 1000px) {
+  .col {
+    margin: 5px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  #live-alert {
+    width: 90%;
+  }
+
+  #rel-modal {
+    max-width: 95%;
+    width: 100%;
+    margin-top: 2em;
+  }
+
+  .wrapper-body {
+    max-height: 200px;
+    height: fit-content;
+    overflow-y: auto;
+  }
+}

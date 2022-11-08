@@ -1,0 +1,39 @@
+:root {
+  --bg-light: #f7f7f7;
+  --primary: #8a40b4;
+}
+
+#wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+  width: 100%;
+}
+
+[data-setor-nome] {
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+
+[data-setor-nome]:hover {
+  background-color: var(--primary);
+  color: var(--bg-light);
+}
+
+[data-setor-nome].active {
+  background-color: var(--primary);
+  color: var(--bg-light);
+}
+
+
+
+@media screen and (max-width: 997px) {
+  #wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+}
