@@ -1,134 +1,108 @@
-const yesBtn = document.getElementById("yes");
+/* 
+- Se há valor no input de email
+- Se sim, checar se é um email válido
+*/
 
-const password = document.getElementById("password");
-const confirmPassword = document.getElementById("confirmPassword");
-const email = document.getElementById("email");
-const matricula = document.getElementById("matricula");
+const userEmail = document.querySelector("#email");
 
-// checa se o tamanho da senha encaixa nos requisitos
-password.addEventListener("input", () => {
-  const feedback = document.querySelector(".feedback");
-
-  if (password.value.length < 8) {
-    feedback.classList.remove("valid");
-    feedback.innerHTML = "Senha deve conter mais que 8 caracteres.";
-    feedback.classList.add("invalid");
-  } else if (password.value.length > 8) {
-    feedback.classList.remove("invalid");
-    feedback.classList.add("valid");
-    feedback.innerHTML = "Parece bom!";
-  }
-
-  setInterval(() => {
-    if (!password.value) {
-      feedback.classList.remove("invalid");
-      feedback.classList.remove("valid");
-      feedback.innerHTML = "";
-    }
-  }, 5000);
-});
-
-// valida o input do email
-email.addEventListener("input", () => {
-  const feedbackEmail = document.querySelector(".feedback-email");
-  if (validateEmail(email.value)) {
-    feedbackEmail.classList.remove("invalid");
-    feedbackEmail.classList.add("valid");
-    feedbackEmail.innerHTML = "Parece bom!";
+userEmail.addEventListener("change", (e) => {
+  if (validateEmail(e.target.value) && e.target.value) {
+    e.target.classList.remove("border-danger");
+    return e.target.classList.add("border-success");
   } else {
-    feedbackEmail.classList.remove("valid");
-    feedbackEmail.classList.add("invalid");
-    feedbackEmail.innerHTML = "Insira um email valido!";
-    yesBtn.setAttribute("disabled", true);
+    e.target.classList.remove("border-success");
+    return e.target.classList.add("border-danger");
   }
-
-  setInterval(() => {
-    if (!email.value) {
-      feedbackEmail.classList.remove("invalid");
-      feedbackEmail.classList.remove("valid");
-      feedbackEmail.innerHTML = "";
-    }
-  }, 5000);
 });
 
-// valida a confirmação de senha
-confirmPassword.addEventListener("input", () => {
-  const feedbackConfirm = document.querySelector(".feedback-confirm");
-
-  if (confirmPassword.value !== password.value) {
-    feedbackConfirm.classList.remove("valid");
-    feedbackConfirm.classList.add("invalid");
-    feedbackConfirm.innerHTML = "A senhas devem ser iguais!";
-  } else {
-    feedbackConfirm.classList.remove("invalid");
-    feedbackConfirm.classList.add("valid");
-    feedbackConfirm.innerHTML = "Parece bom!";
-    yesBtn.removeAttribute("disabled");
-  }
-
-  setInterval(() => {
-    if (!confirmPassword.value) {
-      feedbackConfirm.classList.remove("invalid");
-      feedbackConfirm.classList.remove("valid");
-      feedbackConfirm.innerHTML = "";
-    }
-  }, 5000);
-});
-
-// função valida o email
-function validateEmail(email) {
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-  return String(email).toLowerCase().match(re);
+function validateEmail(target) {
+  return String(target)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+    );
 }
 
-// submit troca de senha e att email
+// valida as senhas
+function validatePassword() {
+  const pass = document.querySelector("#password");
 
-yesBtn.addEventListener("click", async () => {
-  if (!email.value || !confirmPassword.value || !password.value) {
-    yesBtn.classList.remove("valid");
-    yesBtn.classList.add("invalid");
+  if (pass.value.length > 8) {
+    pass.classList.remove("border-danger");
     return;
   } else {
-    yesBtn.classList.remove("valid");
-    yesBtn.classList.remove("invalid");
+    pass.classList.add("border-danger");
+    return;
   }
+}
+
+// toggle pass visibility
+const togglePassVis = document.querySelector("#show-password");
+
+togglePassVis.addEventListener("click", () => {
+  const pass = document.querySelector("#password");
+
+  if (togglePassVis.classList.contains("show-pass")) {
+    togglePassVis.innerHTML = `
+      <span><i class="bi bi-eye"></i></span>
+      <span class="text-muted">Esconder senha</span>
+    `;
+
+    pass.setAttribute("type", "text");
+    togglePassVis.classList.remove("show-pass");
+  } else {
+    togglePassVis.innerHTML = `
+      <span><i class="bi bi-eye-slash"></i></span>
+      <span class="text-muted">Mostrar senha</span>
+    `;
+
+    pass.setAttribute("type", "password");
+    togglePassVis.classList.add("show-pass");
+  }
+});
+
+// make the change
+const confirmButton = document.querySelector("#yes");
+
+confirmButton.addEventListener("click", async () => {
+  const email = document.querySelector("#email");
+  const password = document.querySelector("#password");
+  const secret = document.querySelector("#secret");
+  const answer = document.querySelector("#secret-answer");
+  const matricula = document.querySelector("#matricula");
+
+  if (!password.value || !secret.value || !answer.value)
+    return alert(
+      "Preencha todos os campos obrigatórios (senha, pergunta secreta e resposta secreta)"
+    );
 
   try {
-    yesBtn.innerHTML = "Atualizando...";
     const res = await axios.post(
       "/sistemas/horas-extras/primeiro_acesso/update",
       {
         matricula: matricula.value,
+        email: email.value ? email.value : undefined,
         password: password.value,
-        email: email.value,
+        secret: secret.value,
+        secretAnswer: answer.value,
       }
     );
 
-    if (res.status === 200) {
-      yesBtn.classList.remove("invalid");
-      yesBtn.classList.add("active");
-      yesBtn.innerHTML = res.data.message.toUpperCase();
+    if (res) {
+      return swal({
+        title: "DADOS ATUALIZADO COM SUCESSO",
+        icon: "success",
+        button: true,
+      }).then((result) => {
+        window.location.href = "/sistema/horas-extras/login";
+      });
     }
-
-    setTimeout(() => {
-      yesBtn.classList.remove("valid");
-      yesBtn.innerHTML = "Confirmar.";
-      window.location.href = "/sistema/horas-extras/login";
-    }, 5000);
   } catch (error) {
     console.log(error);
-
-    yesBtn.classList.remove("valid");
-    yesBtn.classList.add("invalid");
-    yesBtn.innerHTML = error.response.data.message
-      ? error.response.data.message
-      : "ALGO DEU ERRADO.";
+    return swal({
+      title: "OPS! ACONTECEU UM ERRO INESPERADO.",
+      icon: "error",
+      button: true,
+    });
   }
-
-  setTimeout(() => {
-    yesBtn.classList.remove("invalid");
-    yesBtn.innerHTML = "Confirmar.";
-  }, 5000);
 });

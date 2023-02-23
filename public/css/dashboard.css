@@ -8,6 +8,7 @@
   max-height: 500px;
   border-radius: 20px;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  height: 500px;
 }
 .primary-text-color {
   color: var(--primary);
@@ -35,34 +36,46 @@
   background-color: var(--bg-light);
 }
 
-#rel-modal {
+#rel-modal,
+#rel-modal-setor {
   background-color: var(--bg-light);
   border: rgba(0, 0, 0, 0.3);
   border-radius: 20px;
+  max-width: 85%;
+  width: 100%;
 }
 
-#rel-modal p {
+#rel-modal p,
+#rel-modal-setor p {
   font-size: 2rem;
   font-weight: 700;
 }
 
-.wrapper-body {
+.wrapper-body-func,
+.wrapper-body-setor {
   max-height: 400px;
   height: fit-content;
   overflow-y: auto;
 }
 
-#generate_xlsx {
+#generate_xlsx,
+#generate_xlsx_setor {
   background-color: var(--primary);
   color: var(--bg-light);
 }
-#close-modal {
+#close-modal,
+#close-modal-setor {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .btn-cad {
   background-color: var(--primary);
   color: var(--bg-light);
+}
+
+#fechamento-btn.unabled {
+  pointer-events: none;
+  background-color: grey;
 }
 
 @media screen and (min-width: 1000px) {
@@ -76,13 +89,15 @@
     width: 90%;
   }
 
-  #rel-modal {
+  #rel-modal,
+  #rel-modal-setor {
     max-width: 95%;
     width: 100%;
     margin-top: 2em;
   }
 
-  .wrapper-body {
+  .wrapper-body-func,
+  .wrapper-body-setor {
     max-height: 200px;
     height: fit-content;
     overflow-y: auto;

@@ -1,0 +1,38 @@
+<nav class="nav-menu" data-nav-animation>
+  <div class="wrapper">
+    <div class="title-nav"><i class="fa-solid fa-layer-group"></i> MENU</div>
+  </div>
+  <div class="opt-menu">
+    <ul>
+      <li>
+        <a href="/main"><i class="fa-solid fa-house"></i> INICIO</a>
+      </li>
+      <% if (user.level === 0) { %>
+      <li>
+        <a href="/solicitar"
+          ><i class="fa-solid fa-circle-plus"></i> SOLICITAR HORAS</a
+        >
+      </li>
+      <% } %>
+      <li>
+        <a href="/horas"><i class="fa-solid fa-list-check"></i> SOLICITAÇÕES</a>
+      </li>
+      <% if (user.level !== 0) { %>
+      <li>
+        <a href="/procurar"
+          ><i class="fa-brands fa-searchengin"></i> CONSULTAR FUNCIONÁRIO</a
+        >
+      </li>
+      <% } %> <% if (user.level === 3) { %>
+      <li>
+        <a href="/admin/panel">
+          <i class="fa-solid fa-screwdriver-wrench"></i> PAINEL ADMINISTRADOR
+        </a>
+      </li>
+      <% } %>
+      <li>
+        <a href="/logout"> <i class="fa-solid fa-power-off"></i> SAIR </a>
+      </li>
+    </ul>
+  </div>
+</nav>

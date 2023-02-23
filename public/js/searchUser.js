@@ -1,3 +1,23 @@
+// informa caso um pedido foi solicitado
+window.addEventListener("DOMContentLoaded", (e) => {
+  const didHappen = window.localStorage.getItem("requestHappened");
+
+  if (didHappen) {
+    swal({
+      title: "PEDIDO REGISTRADO!",
+      text: "Agora só aguardar a aprovação das chefias necessárias.",
+      icon: "success",
+      button: true,
+    });
+
+    setTimeout(() => {
+      window.localStorage.clear();
+    }, 2000);
+  } else {
+    return;
+  }
+});
+
 // atualiza formulário
 async function getUserFromMat() {
   const searchInputMatricula = document.querySelector("#matricula");
@@ -10,6 +30,7 @@ async function getUserFromMat() {
     const res = await axios.get(
       `/sistemas/horas-extras/func/${searchInputMatricula.value}`
     );
+
 
     if (res) {
       foundUserFormInputs.forEach((inp) => {
@@ -32,7 +53,7 @@ async function getUserFromMat() {
             res.data.parsedData.dataNascimento
           ).toLocaleDateString();
         } else if (inp.getAttribute("id") === "email") {
-          inp.value = res.data.parsedData.email.toUpperCase();
+          inp.value = res.data.parsedData.email ? res.data.parsedData.email.toUpperCase() : '-';
         } else if (inp.getAttribute("id") === "telefone") {
           inp.value = res.data.parsedData.telefone;
         } else if (inp.getAttribute("id") === "vinculo") {
@@ -69,7 +90,7 @@ async function getUserFromMat() {
           foundUserForm.classList.add("d-none");
           return clearInterval(interval);
         }
-      }, 2000);
+      }, 8000);
     }
   } catch (error) {
     console.log(error);
@@ -81,7 +102,7 @@ async function getUserFromMat() {
       return setTimeout(() => {
         feedback.classList.remove("text-danger");
         feedback.innerHTML = "";
-      }, 3000);
+      }, 8000);
     }
   }
 }
@@ -120,7 +141,7 @@ submitButton.addEventListener("click", (e) => {
       justif.classList.remove("border-danger");
       modalFeedback.classList.remove("text-danger");
       modalFeedback.innerHTML = "";
-    }, 3000);
+    }, 8000);
   } else {
     isAllDone = true;
   }
@@ -130,7 +151,7 @@ submitButton.addEventListener("click", (e) => {
     const date = new Date(dia.value);
     const today = new Date(Date.now());
 
-    if (date.getDate() < today.getDate() - 2) {
+    if (date.getDate() < today.getDate() - 2 && date.getMonth() === today.getMonth()) {
       dia.classList.add("border", "border-danger");
       modalFeedback.classList.add("text-danger");
       modalFeedback.innerHTML = "NÃO PERMITIDO DIAS RETROATIVOS.";
@@ -139,7 +160,7 @@ submitButton.addEventListener("click", (e) => {
         dia.classList.remove("border-danger");
         modalFeedback.classList.remove("text-danger");
         modalFeedback.innerHTML = "";
-      }, 3000);
+      }, 8000);
     } else {
       isDiaDone = true;
     }
@@ -168,7 +189,7 @@ submitButton.addEventListener("click", (e) => {
         hora.classList.remove("border-danger");
         modalFeedback.classList.remove("text-danger");
         modalFeedback.innerHTML = "";
-      }, 3000);
+      }, 8000);
     } else if (!hora.value.split(".")) {
       hora.classList.add("border", "border-danger");
       modalFeedback.classList.add("text-danger");
@@ -178,7 +199,7 @@ submitButton.addEventListener("click", (e) => {
         hora.classList.remove("border-danger");
         modalFeedback.classList.remove("text-danger");
         modalFeedback.innerHTML = "";
-      }, 3000);
+      }, 8000);
     } else if (
       Number(hora.value.split(".")[1]) > 50 ||
       Number(hora.value.split(".")[1]) < 0
@@ -191,7 +212,7 @@ submitButton.addEventListener("click", (e) => {
         hora.classList.remove("border-danger");
         modalFeedback.classList.remove("text-danger");
         modalFeedback.innerHTML = "";
-      }, 3000);
+      }, 8000);
     } else if (
       semana[date.getDay()] === "Sábado" ||
       semana[date.getDay()] === "Domingo"
@@ -206,7 +227,7 @@ submitButton.addEventListener("click", (e) => {
           hora.classList.remove("border-danger");
           modalFeedback.classList.remove("text-danger");
           modalFeedback.innerHTML = "";
-        }, 3000);
+        }, 8000);
       } else {
         isHoraDone = true;
       }
@@ -225,7 +246,7 @@ submitButton.addEventListener("click", (e) => {
           hora.classList.remove("border-danger");
           modalFeedback.classList.remove("text-danger");
           modalFeedback.innerHTML = "";
-        }, 3000);
+        }, 8000);
       } else {
         isHoraDone = true;
       }
@@ -243,7 +264,7 @@ submitButton.addEventListener("click", (e) => {
         anexo.classList.remove("border-danger");
         modalFeedback.classList.remove("text-danger");
         modalFeedback.innerHTML = "";
-      }, 3000);
+      }, 8000);
     } else {
       isAnexoDone = true;
     }
@@ -252,6 +273,7 @@ submitButton.addEventListener("click", (e) => {
   console.log(isAllDone, isAnexoDone, isDiaDone, isHoraDone);
 
   if (isAllDone && isAnexoDone && isDiaDone && isHoraDone) {
+    window.localStorage.setItem("requestHappened", true);
     return formModal.submit();
   }
 });

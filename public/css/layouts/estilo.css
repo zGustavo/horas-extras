@@ -1,0 +1,253 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+::root {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+#corpo {
+  width: 60%;
+  height: 100%;
+  margin: auto;
+  box-shadow: 0rem 1rem 1rem 0.1rem rgba(0, 0, 0, 0.178);
+}
+#logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.circle {
+  width: 7.5rem;
+  height: 7.5rem;
+  background-color: lightgray;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#logo > span {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+}
+#imglogo {
+  width: 55%;
+}
+
+#box1 {
+  width: 100%;
+  height: 20%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+#box2 {
+  width: 100%;
+  height: 35%;
+  font-size: 1rem;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+.caixa {
+  border: solid lightgray 0.15rem;
+  width: 60%;
+  height: 100;
+  padding: 1rem 2rem;
+  overflow: auto;
+  border-radius: 1rem;
+}
+
+#caixaBotao {
+  margin-top: 1rem;
+  width: 100%;
+  height: 12.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clicaveis {
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  font-size: 1rem;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+input {
+  margin-right: 5px;
+}
+
+.check {
+  width: 65%;
+  display: flex;
+
+
+}
+
+.button {
+  margin-top: 1rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+#botao {
+  width: 65%;
+  height: 3.5rem;
+  border-radius: 0.5rem;
+  border-style: none;
+  background-color: #1d4ed8;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+#botao:hover {
+  cursor: pointer;
+  background-color: darkslateblue;
+}
+
+@media (min-width: 0px) and (max-width: 720px) {
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  html,
+  body {
+    height: 100vh;
+    width: 100%;
+    font-family: sans-serif;
+    font-weight: bold;
+  }
+  #corpo {
+    width: 100%;
+  }
+  
+  
+  #logo {
+    margin-top: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+
+  .circle {
+    width: 5rem;
+    height: 5rem;
+    background-color: rgba(101,116);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #logo > span {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+  }
+  #imglogo {
+    width: 55%;
+  }
+
+  #box1 {
+    width: 100%;
+    height: 20%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+
+  #box2 {
+    width: 100%;
+    height: 35%;
+    font-size: 0.9rem;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+  }
+
+  .caixa {
+    border: solid lightgray 0.1rem;
+    width: 60%;
+    height: 100;
+    padding: 1rem 2rem;
+    overflow: auto;
+    border-radius: 1rem;
+  }
+
+  #caixaBotao {
+    margin-top: 1rem;
+    width: 100%;
+    height: 12.5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .clicaveis {
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    font-size: 0.75rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  input {
+    margin-right: 5px;
+  }
+
+  .check {
+    width: 80%;
+  }
+
+  .button {
+    margin-top: 1rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  #botao {
+    width: 80%;
+    height: 3.5rem;
+    border-radius: 0.5rem;
+    border-style: none;
+    background-color: #1d4ed8;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+
+  #botao:hover {
+    cursor: pointer;
+    background-color: darkslateblue;
+  }
+}

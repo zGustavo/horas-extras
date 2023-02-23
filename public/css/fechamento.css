@@ -1,0 +1,59 @@
+:root {
+    --bg-light: #f7f7f7;
+    --primary: #8a40b4;
+  }
+  
+  .cad-func-btn {
+    background-color: var(--primary);
+    color: var(--bg-light);
+  }
+  
+  .informative-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bg-light);
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    transition: 0.25s ease;
+  }
+  
+  .informative-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .svg-container {
+    margin: 0 auto;
+    padding: 0.5rem;
+  }
+  
+  .svg-container svg {
+    width: 100px;
+    color: var(--primary);
+  }
+  
+  [data-inform-show] {
+    display: none;
+  }
+  
+  [data-inform-show].able {
+    display: flex;
+  }
+  
+  @media screen and (max-width: 800px) {
+    .informative-modal {
+      width: 90%;
+    }
+  }
+  

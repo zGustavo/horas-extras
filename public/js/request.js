@@ -1,4 +1,24 @@
+window.addEventListener("DOMContentLoaded", (e) => {
+  const didHappen = window.localStorage.getItem("requestHappened");
+
+  if (didHappen) {
+    swal({
+      title: "PEDIDO REGISTRADO!",
+      text: "Verifique o status do seu pedido em SOLICITAÇÕES",
+      icon: "success",
+      button: true,
+    });
+
+    setTimeout(() => {
+      window.localStorage.clear();
+    }, 2000);
+  } else {
+    return;
+  }
+});
+
 // pattern para input de arquivo/anexo.
+
 const pattern = /\.(gif|pdf|jpe?g|tiff?|png|webp|bmp)$/i;
 let isEverythingOkay = false;
 
@@ -19,11 +39,15 @@ form.addEventListener("submit", async (e) => {
     "Sábado",
   ];
 
+
   const matricula = e.target[0];
   const dia = e.target[1];
   const horaPedido = e.target[2];
   const file = e.target[3];
   const justificativa = e.target[4];
+
+  const year = new Date(dia).getFullYear();
+  const yearNow = new Date(Date.now()).getFullYear();
 
   // checa se valor é vazio
   if (
@@ -86,6 +110,7 @@ form.addEventListener("submit", async (e) => {
   isEverythingOkay = true;
 
   if (isEverythingOkay) {
+    window.localStorage.setItem("requestHappened", true);
     form.submit();
   }
 });

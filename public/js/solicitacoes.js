@@ -1,177 +1,287 @@
-const expandButton = document.querySelectorAll("[data-setor-nome]");
-const hourWrapper = document.querySelectorAll("[data-func-set-nome]");
-const aprovAllButtons = document.querySelectorAll("[data-aprov-all-set-name]");
-const singleAprovButton = document.querySelectorAll("[data-aprov-id]");
-const singleReprovButton = document.querySelectorAll("[data-reprov-id]");
-const hours = document.querySelectorAll("[data-id]");
+// expande as horas extras 
+const btnWrapper = document.querySelectorAll(".wrapper-button");
 
-// expandir as horas do setor
-expandButton.forEach((expand) => {
-  expand.addEventListener("click", function () {
-    hourWrapper.forEach((hour) => {
-      if (
-        hour.getAttribute("data-func-set-nome") ===
-        expand.getAttribute("data-setor-nome")
-      ) {
-        if (hour.classList.contains("d-none")) {
-          hour.classList.remove("d-none");
-          hour.classList.add("d-block");
-          expand.classList.add("active");
-          aprovAllButtons.forEach((btn) => {
-            if (
-              btn.getAttribute("data-aprov-all-set-name") ===
-              expand.getAttribute("data-setor-nome")
-            ) {
-              btn.classList.remove("d-none");
-              btn.classList.add("d-block");
+btnWrapper.forEach((btn) => {
+  btn.addEventListener("click", function () {
+    const wrapper = document.querySelectorAll("[data-for]");
+    
+    wrapper.forEach((wr) => {
+      if (wr.getAttribute("data-for") === btn.getAttribute("data-open")) {
+        if (wr.classList.contains("d-none")) {
+          wr.classList.remove("d-none");
+          wr.classList.add("d-block");
+                } else {
+          wr.classList.remove("d-block");
+          wr.classList.add("d-none");
+                }
             }
-          });
-        } else {
-          hour.classList.remove("d-block");
-          hour.classList.add("d-none");
-          expand.classList.remove("active");
-          aprovAllButtons.forEach((btn) => {
-            if (
-              btn.getAttribute("data-aprov-all-set-name") ===
-              expand.getAttribute("data-setor-nome")
-            ) {
-              btn.classList.remove("d-block");
-              btn.classList.add("d-none");
+    });
+  });
+});
+
+// aprovar ou reprovar um por um
+const aprovButton = document.querySelectorAll(".aprov");
+const reprovButton = document.querySelectorAll(".reprov");
+
+aprovButton.forEach((button) => {
+  button.addEventListener("click", async function () {
+    const id = Number(this.getAttribute("data-aprov"));
+
+       try {
+      const res = await axios.put(`/sistemas/horas-extras/hora/aprov/${id}`);
+
+        swal({
+            title: res.data.message,
+        icon: "success",
+        button: true,
+      }).then((value) => {
+            if (value === true) {
+          return window.location.reload();
             }
-          });
-        }
-      } else {
-        expand.classList.remove("active");
-      }
-    });
+      });
+       } catch (error) {
+      console.log(error);
+        swal({
+            title: error.response.data.message,
+        icon: "warning",
+        button: true,
+      });
+       }
   });
 });
 
-// aprova unica solicitação
-singleAprovButton.forEach((id) => {
-  id.addEventListener("click", () => {
-    hours.forEach(async (hour) => {
-      if (hour.getAttribute("data-id") === id.getAttribute("data-aprov-id")) {
-        hour.innerHTML = `
-                <div class="spinner-border text-light" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                `;
+reprovButton.forEach((button) => {
+  button.addEventListener("click", async function () {
+    const id = Number(this.getAttribute("data-reprov"));
 
-        const res = await axios.put(
-          `/sistemas/horas-extras/hora/aprov/${hour.getAttribute("data-id")}`
+       try {
+      const res = await axios.put(`/sistemas/horas-extras/hora/reprov/${id}`);
+
+        swal({
+            title: res.data.message,
+        icon: "success",
+        button: true,
+      }).then((value) => {
+            if (value === true) {
+          return window.location.reload();
+            }
+      });
+       } catch (error) {
+      console.log(error);
+        swal({
+            title: error.response.data.message,
+        icon: "warning",
+        button: true,
+      });
+       }
+  });
+});
+
+// aprovar, reprovar todos
+const aprovAllButton = document.querySelector(".aprov-all");
+const reprovAllButton = document.querySelector(".reprov-all");
+
+if (aprovAllButton) {
+  aprovAllButton.addEventListener("click", async () => {
+    const ids = document.querySelectorAll("[data-id]");
+    const idsArray = [];
+    
+    ids.forEach((id) => {
+      idsArray.push(id.getAttribute("data-id"));
+    });
+    
+        try {
+      const res = idsArray.map(async (id) => {
+        return await axios.put(
+          `/sistemas/horas-extras/hora/aprov/${Number(id)}`
         );
-
-        if (!res) {
-          id.innerHTML = res.data.message;
-          id.classList.remove("btn-success");
-          id.classList.add("btn-danger");
-
-          return setInterval(() => {
-            id.classList.remove("btn-danger");
-            id.classList.add("btn-success");
-            id.innerHTML = "APROVAR";
-          }, 5000);
-        } else {
-          console.log(res);
-          id.innerHTML = res.data.message;
-          return setInterval(() => {
-            id.classList.remove("btn-danger");
-            id.classList.add("btn-success");
-            id.innerHTML = "APROVAR";
-            hour.parentNode.removeChild(hour);
-            window.location.reload();
-          }, 1000);
+      });
+    
+            swal({
+        title: "SOLICITAÇÕES APROVADAS",
+        icon: "warning",
+        button: true,
+      }).then((value) => {
+                if (value === true) {
+          return window.location.reload();
+                }
+      });
+        } catch (error) {
+      console.log(error);
+            swal({
+                title: error.response.data.message,
+        icon: "warning",
+        button: true,
+      });
         }
-      }
-    });
   });
-});
+} 
 
-// reprovar single solicitação
-singleReprovButton.forEach((id) => {
-  id.addEventListener("click", () => {
-    hours.forEach(async (hour) => {
-      if (hour.getAttribute("data-id") === id.getAttribute("data-reprov-id")) {
-        hour.innerHTML = `
-                <div class="spinner-border text-light" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                `;
-
-        const res = await axios.put(
-          `/sistemas/horas-extras/hora/reprov/${hour.getAttribute("data-id")}`
+if (reprovAllButton) {
+  reprovAllButton.addEventListener("click", async () => {
+    const ids = document.querySelectorAll("[data-id]");
+    const idsArray = [];
+    
+    ids.forEach((id) => {
+      idsArray.push(id.getAttribute("data-id"));
+    });
+    
+        try {
+      const res = idsArray.map(async (id) => {
+        return await axios.put(
+          `/sistemas/horas-extras/hora/reprov/${Number(id)}`
         );
-
-        if (!res) {
-          id.innerHTML = res.data.message;
-          id.classList.remove("btn-success");
-          id.classList.add("btn-danger");
-
-          return setInterval(() => {
-            id.classList.remove("btn-danger");
-            id.classList.add("btn-success");
-            id.innerHTML = "APROVAR";
-          }, 5000);
-        } else {
-          console.log(res);
-          id.innerHTML = res.data.message;
-          return setInterval(() => {
-            id.classList.remove("btn-danger");
-            id.classList.add("btn-success");
-            id.innerHTML = "APROVAR";
-            hour.parentNode.removeChild(hour);
-            window.location.reload();
-          }, 1000);
+      });
+    
+            swal({
+        title: "SOLICITAÇÕES REPROVADAS",
+        icon: "warning",
+        button: true,
+      }).then((value) => {
+                if (value === true) {
+          return window.location.reload();
+                }
+      });
+        } catch (error) {
+      console.log(error);
+            swal({
+                title: error.response.data.message,
+        icon: "warning",
+        button: true,
+      });
         }
+  });
+} 
+
+// aprovação nível 3
+const aprovAllButton3 = document.querySelectorAll("[data-aprov-all-set]");
+const reprovAllButton3 = document.querySelectorAll("[data-reprov-all-set]");
+
+if (aprovAllButton3) {
+  aprovAllButton3.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const ids = document.querySelectorAll("[data-id]");
+      const arr = [];
+
+      ids.forEach((id) => {
+        if (
+          id.getAttribute("data-setor") ===
+          btn.getAttribute("data-aprov-all-set")
+        ) {
+          arr.push(id.getAttribute("data-id"));
+                }
+      });
+
+            try {
+        const res = arr.map(async (id) => {
+          return await axios.put(
+            `/sistemas/horas-extras/hora/aprov/${Number(id)}`
+          );
+        });
+        
+                swal({
+          title: `SOLICITAÇÕES DE ${btn
+            .getAttribute("data-aprov-all-set")
+            .toUpperCase()} APROVADAS.`,
+          icon: "success",
+          button: true,
+        }).then((value) => {
+                    if (value === true) {
+            return window.location.reload();
+                    }
+        });
+            } catch (error) {
+        console.log(error);
+                swal({
+                    title: error.response.data.message,
+          icon: "warning",
+          button: true,
+        });
+            }
+    });
+  });
+}
+if (reprovAllButton3) {
+  reprovAllButton3.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const ids = document.querySelectorAll("[data-id]");
+      const arr = [];
+
+      ids.forEach((id) => {
+        if (
+          id.getAttribute("data-setor") ===
+          btn.getAttribute("data-reprov-all-set")
+        ) {
+          arr.push(id.getAttribute("data-id"));
+                }
+      });
+
+            try {
+        const res = arr.map(async (id) => {
+          return await axios.put(
+            `/sistemas/horas-extras/hora/reprov/${Number(id)}`
+          );
+        });
+        
+                swal({
+          title: `SOLICITAÇÕES DE ${btn
+            .getAttribute("data-reprov-all-set")
+            .toUpperCase()} REPROVADAS.`,
+          icon: "warning",
+          button: true,
+        }).then((value) => {
+                    if (value === true) {
+            return window.location.reload();
+                    }
+        });
+      } catch (error) {
+        console.log(error);
+        swal({
+          title: error.response.data.message,
+          icon: "warning",
+          button: true,
+        });
       }
     });
   });
-});
+}
+                
+// cancelar hora extra
+const cancelBtn = document.querySelectorAll("#cancel-request");
 
-const aprovAllHoursButton = document.querySelectorAll(
-  "[data-aprov-all-set-name] button"
-);
-const hoursWrapper = document.querySelector("[data-func-set-nome]");
+if (cancelBtn) {
+  cancelBtn.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.getAttribute("data-req-id");
 
-aprovAllHoursButton.forEach((button) => {
-  button.addEventListener("click", async () => {
-    const setor = document.querySelector("[data-aprov-all-set-name]");
-    const dataAttr = setor.getAttribute("data-aprov-all-set-name");
-    const hoursAttr = hoursWrapper.getAttribute("data-func-set-nome");
-
-    if (dataAttr === hoursAttr) {
-      const hoursId = hoursWrapper.querySelectorAll("[data-id]");
-
-      if (button.getAttribute("id") === "aprov-all") {
-        hoursId.forEach(async (id) => {
-          try {
-            const res = await axios.put(
-              `/sistemas/horas-extras/hora/aprov/${id.getAttribute("data-id")}`
-            );
-          } catch (error) {
-            console.log(error);
-          }
+      try {
+        const r = await axios.post("/sistemas/horas-extras/hora/cancel", {
+          id,
         });
 
-        setInterval(() => {
-          return window.location.reload();
-        }, 2000);
-      } else {
-        hoursId.forEach(async (id) => {
-          try {
-            const res = await axios.put(
-              `/sistemas/horas-extras/hora/reprov/${id.getAttribute("data-id")}`
-            );
-          } catch (error) {
-            console.log(error);
+        const message = r.data.message;
+
+        swal({
+          title: message,
+          icon: "success",
+          button: true,
+        }).then((value) => {
+          if (value === true) {
+            return window.location.reload();
           }
         });
-
-        setInterval(() => {
-          return window.location.reload();
-        }, 2000);
-      }
-    }
+            } catch (error) {
+                console.log(error)
+                swal({
+                    title: error.response.data.message,
+          icon: "error",
+          button: true,
+        }).then((value) => {
+          if (value === true) {
+            return window.location.reload();
+            }
+        });
+}
+    });
   });
-});
+}

@@ -9,8 +9,6 @@ form.addEventListener("submit", async (e) => {
 
   const submitBtn = document.getElementById("submit-btn");
 
-  console.log(user.value, password.value, e.target[0].value, e.target[1].value);
-
   if (!user.value || !password.value)
     return form.classList.add("was-validated");
 
@@ -43,14 +41,14 @@ form.addEventListener("submit", async (e) => {
     submitBtn.classList.remove("btn-success");
     submitBtn.classList.add("btn-danger");
     submitBtn.innerHTML = error.response.data.message;
+    user.value = "";
+    password.value = "";
 
     setTimeout(() => {
-      user.value = "";
-      password.value = "";
       submitBtn.classList.remove("btn-danger");
       submitBtn.classList.add("btn-primary");
       submitBtn.innerHTML = "ENTRAR";
-    }, 4000);
+    }, 2000);
   }
 });
 

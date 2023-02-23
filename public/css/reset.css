@@ -1,0 +1,46 @@
+:root {
+  --bg-light: #f7f7f7;
+  --primary: #8a40b4;
+}
+
+.bg--container {
+  background-color: var(--bg-light);
+}
+
+img {
+  width: 100%;
+  margin: 10px;
+  max-width: 250px;
+}
+.search-btn,
+#change {
+  background-color: var(--primary);
+  color: var(--bg-light);
+  max-width: 250px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  background-color: var(--primary);
+  color: var(--bg-light);
+}
+
+#data {
+  width: 100%;
+}
+
+.togglePass {
+  cursor: pointer;
+  color: grey;
+}
+
+.togglePass:hover {
+  color: #8a40b4;
+}
+
+@media screen and (min-width: 687px) {
+  #data {
+    width: 25%;
+  }
+}
