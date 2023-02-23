@@ -85,6 +85,16 @@ const Funcionario = sequelize.define(
     telefone: {
       type: Sequelize.STRING,
     },
+    perguntaSecreta: {
+      type: Sequelize.STRING,
+    },
+    respostaSecreta: {
+      type: Sequelize.STRING,
+    },
+    ativo: {
+      type: Sequelize.STRING,
+      default: "SIM",
+    },
   },
   {
     freezeTableName: true,
@@ -93,5 +103,11 @@ const Funcionario = sequelize.define(
 
 Funcionario.hasMany(Horas);
 Horas.belongsTo(Funcionario);
+
+Funcionario.hasMany(Funcionario, { as: "chefia", foreignKey: "chefiaId" });
+Funcionario.hasMany(Funcionario, {
+  as: "secretario",
+  foreignKey: "secretarioId",
+});
 
 module.exports = Funcionario;

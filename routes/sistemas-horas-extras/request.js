@@ -7,7 +7,7 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../../upload/sistemas-horas-extras"));
+    cb(null, path.join(__dirname, "../../upload/sistemas-horas-extras")); 
   },
   filename: (req, file, cb) => {
     cb(null, "anexo" + Date.now() + file.originalname);
@@ -67,6 +67,12 @@ router.put(
   "/sistemas/horas-extras/hora/reprov/:id",
   authUser.authRoutes,
   sysPutRoutesController.singleReprovOvertime
+);
+
+// cancelar solicitação
+router.post(
+  "/sistemas/horas-extras/hora/cancel",
+  sysPostRoutesController.cancelRequest
 );
 
 module.exports = router;

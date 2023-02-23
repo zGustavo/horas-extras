@@ -4,6 +4,10 @@ const Horas = require("../../model/horas");
 const Secretaria = require("../../model/secretaria");
 const Setor = require("../../model/setor");
 const SubSetor = require("../../model/subSetor");
+const bcrypt = require("bcryptjs");
+const util = require("../../config/functions");
+const { Op } = require("sequelize");
+const moment = require("moment");
 
 // get main pág
 exports.getSysMainPage = async (req, res) => {
@@ -26,6 +30,36 @@ exports.getSysResetPage = async (req, res) => {
     .render(
       path.join(__dirname, "../../views/sistemas-horas-extras/reset/", "reset")
     );
+};
+
+// get data info
+exports.getMyAccountInfo = async (req, res) => {
+  const { mat } = req.params;
+
+  try {
+    const func = await Funcionario.findOne({
+      where: {
+        matricula: mat,
+      },
+      attributes: ["perguntaSecreta", "respostaSecreta", "senha", "nome"],
+    });
+
+    if (!func)
+      return res.status(400).json({
+        message:
+          "NENHUM FUNCIONÁRIO ENCONTRADO, POR FAVOR VERIFIQUE A MATRICULA.",
+      });
+
+    res.status(200).json({
+      message: {
+        pergunta: func.perguntaSecreta,
+        resposta: func.respostaSecreta,
+        nome: func.nome,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // get primeiro acesso pág
@@ -90,14 +124,10 @@ exports.getMyAccount = async (req, res) => {
 exports.getRequestPage = (req, res) => {
   const date = new Date(Date.now());
 
-  const formattedData = `${date.getFullYear()}-${
-    date.getMonth() + 1 < 10 ? "0" + date.getMonth() : date.getMonth() + 1
-  }-${
-    date.getDate() < 9 ? "0" + date.getDate() - 2 : date.getDate() - 2
-  }T00:00`;
+  const formattedData = util.formatData(date);
 
   req.user.user.today = formattedData;
-  console.log(req.user.user);
+
   res
     .status(200)
     .render(
@@ -114,94 +144,125 @@ exports.getRequestPage = (req, res) => {
 exports.getRequestsPage = async (req, res) => {
   const { user } = req.user;
 
-  function temHoras(set) {
-    const arrayDeHoras = [];
-    const obj = JSON.parse(JSON.stringify(set, null, 2));
-
-    if (req.user.user.level === 1 || req.user.user.level === 2) {
-      if (!obj.length) {
-        const createObjArr = [obj];
-        for (let i = 0; i < createObjArr.length; i++) {
-          if (createObjArr[i].Funcionarios.length) {
-            for (let x = 0; x < createObjArr[i].Funcionarios.length; x++) {
-              if (createObjArr[i].Funcionarios[x].Horas.length) {
-                arrayDeHoras.push(createObjArr[i]);
-                if (arrayDeHoras.indexOf(createObjArr[i]) !== -1) {
-                  break;
-                }
-              }
-            }
-          }
-        }
-      } else {
-        console.log("aqui");
-        for (let i = 0; i < obj.length; i++) {
-          if (obj[i].Funcionarios.length) {
-            for (let x = 0; x < obj[i].Funcionarios.length; x++) {
-              if (obj[i].Funcionarios[x].Horas.length) {
-                arrayDeHoras.push(obj[i]);
-              }
-            }
-          }
-        }
-      }
-    } else if (req.user.user.level === 3) {
-      console.log("aqui");
-      for (let m = 0; m < obj.length; m++) {
-        if (obj[m].Funcionarios.length) {
-          arrayDeHoras.push(obj[m]);
-        }
-      }
-    } else {
-      const arr = [obj];
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i].Horas.length) {
-          for (let x = 0; x < arr[i].Horas.length; x++) {
-            arrayDeHoras.push(arr[i]);
-            if (arrayDeHoras.indexOf(arr[i]) !== -1) {
-              break;
-            }
-          }
-        }
-      }
-    }
-
-    return arrayDeHoras;
-  }
-
   let setor;
+  let sec;
+  let totalHorasFunc = 0;
+  let noData = false;
 
   try {
     if (user.level === 0) {
       setor = await Funcionario.findOne({
         where: { matricula: user.matricula },
-        include: [{ model: SubSetor }, { model: Horas }],
-      });
-    } else if (user.level === 1 || user.level === 2) {
-      setor = await SubSetor.findOne({
-        where: { id: user.setor },
         include: [
+          { model: SubSetor },
           {
-            model: Funcionario,
-            include: [{ model: Horas, where: { status: user.level } }],
+            model: Horas,
+            where: {
+              diaSolicitado: {
+                [Op.gte]: moment().subtract(30, "days").toDate(),
+              },
+            },
+          },
+        ],
+      });
+
+      if (setor) {
+        setor.Horas.forEach((hora) => {
+          if (hora.status === 4 && hora.ativo === "SIM") {
+            totalHorasFunc += Math.round(hora.totalDeHorasPedido);
+          } else if (!hora) {
+            return;
+          }
+        });
+      }
+    } else if (user.level === 1) {
+      setor = await Funcionario.findAll({
+        where: {
+          chefiaId: user.id,
+        },
+        include: [
+          { model: SubSetor },
+          {
+            model: Horas,
+            where: {
+              status: user.level,
+              diaSolicitado: {
+                [Op.gte]: moment().subtract(30, "days").toDate(),
+              },
+              ativo: "SIM",
+            },
+          },
+        ],
+      });
+    } else if (user.level === 2) {
+      setor = await Funcionario.findAll({
+        where: {
+          secretarioId: user.id,
+        },
+        include: [
+          { model: SubSetor },
+          {
+            model: Horas,
+            where: {
+              status: user.level,
+              diaSolicitado: {
+                [Op.gte]: moment().subtract(30, "days").toDate(),
+              },
+              ativo: "SIM",
+            },
           },
         ],
       });
     } else if (user.level === 3) {
       setor = await SubSetor.findAll({
+        include: {
+          model: Funcionario,
+          include: {
+            model: Horas,
+            where: {
+              status: user.level,
+              diaSolicitado: {
+                [Op.gte]: moment().subtract(30, "days").toDate(),
+              },
+              ativo: "SIM",
+            },
+          },
+        },
+      });
+
+      sec = await Setor.findAll({
         include: [
+          { model: Secretaria },
           {
-            model: Funcionario,
-            include: [{ model: Horas, where: { status: 3 } }],
+            model: SubSetor,
+            include: {
+              model: Funcionario,
+              include: {
+                model: Horas,
+                where: {
+                  status: 4,
+                  diaSolicitado: {
+                    [Op.gte]: moment().subtract(30, "days").toDate(),
+                    ativo: "SIM",
+                  },
+                },
+              },
+            },
           },
         ],
       });
+
+      setor.forEach((set) => {
+        if (set.Funcionarios.length > 0) {
+          noData = true;
+          return;
+        }
+      });
     }
 
-    if (!setor)
-      return res.status(400).json({ message: "ERRO EM PUXAR DADOS DO BANCO." });
+    const secData = util.sumHours(sec);
 
-    const dados = temHoras(setor);
+    const dados = user.level === 3 ? setor : util.temHoras(setor);
 
     res
       .status(200)
@@ -211,7 +272,13 @@ exports.getRequestsPage = async (req, res) => {
           "../../views/sistemas-horas-extras/solicitacoes",
           "solicitacoes"
         ),
-        { data: dados, user }
+        {
+          data: typeof dados === undefined ? [] : dados,
+          user,
+          secData,
+          totalHoraFunc: totalHorasFunc ? totalHorasFunc : 0,
+          dataLevel3: noData,
+        }
       );
   } catch (error) {
     console.log(error);
@@ -244,7 +311,8 @@ exports.getAttachment = async (req, res) => {
     return res
       .status(200)
       .sendFile(
-        path.join(__dirname, "../../upload/sistemas-horas-extras", imgName)
+        path.join(imgName)
+          /* __dirname, "../../upload/sistemas-horas-extras",  */
       );
   } catch (error) {
     console.log(error);
@@ -255,14 +323,10 @@ exports.getAttachment = async (req, res) => {
 exports.searchUserRoute = (req, res) => {
   const date = new Date(Date.now());
 
-  const formattedData = `${date.getFullYear()}-${
-    date.getMonth() + 1 < 10 ? "0" + date.getMonth() : date.getMonth() + 1
-  }-${
-    date.getDate() < 9 ? "0" + date.getDate() - 2 : date.getDate() - 2
-  }T00:00`;
+  const formattedData = util.formatData(date);
 
   req.user.user.today = formattedData;
-  console.log(req.user.user);
+
   res
     .status(200)
     .render(
@@ -314,4 +378,41 @@ exports.getFuncionario = async (req, res) => {
 // logout
 exports.logout = (req, res) => {
   res.clearCookie("fauth").status(200).redirect("/sistema/horas-extras/login");
+};
+
+// change password
+
+exports.resetPassword = async (req, res) => {
+  const { mat } = req.params;
+  const { password } = req.body;
+
+  try {
+    const func = await Funcionario.findOne({
+      where: {
+        matricula: mat,
+      },
+    });
+
+    const newPassword = await bcrypt.hash(password, 16);
+
+    await func.update({
+      senha: newPassword,
+    });
+
+    await func.save();
+
+    res.status(200).json({ message: "SENHA ATUALIZADA COM SUCESSO." });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.getTutorialFile = (req, res) => {
+  const filePath = path.join(
+    __dirname,
+    "../../public/assets/tutorial",
+    "tutorial.pdf"
+  );
+
+  res.status(200).sendFile(filePath);
 };

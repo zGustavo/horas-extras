@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/cddaf0c0ff.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,700;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,300;1,700&family=Poppins:wght@200;300;400;500;600;700&family=Roboto+Flex:opsz,wght@8..144,300;8..144,500;8..144,700;8..144,900&family=Roboto:wght@300;500;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="/css/pdi-main.css" />
+    <title>PDI - Pref. de Salto</title>
+</head>
+<style>
+    #menu-btn-toggler,
+    #go-back {
+        display: none;
+    }
+
+    header {
+        background: #fff;
+        z-index: 1;
+    }
+
+    .bg-rounded {
+        width: 90px;
+        height: 150px;
+        background: rgba(101, 116, 250, 0.24);
+        margin: 1em;
+        border-radius: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .bg-rounded svg {
+        width: 100%;
+        max-width: 60%;
+        color: #131d74;
+    }
+
+    .bg-termo-container {
+        background: rgba(101, 116, 250, 0.24);
+        border-radius: 15px;
+        height: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+
+
+
+    @media screen and (max-width: 1297px) {
+        .container {
+            width: 75%;
+        }
+
+    }
+
+    @media screen and (min-width: 1297px) {
+        .container {
+            width: 33%;
+            padding: 1.5em;
+        }
+
+    }
+</style>
+<%- include('../layouts/header.ejs') %>
+<div class="container">
+    <div class="w-100 d-flex align-items-center justify-content-center">
+        <div class="w-50 mx-auto bg-rounded">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-earmark-lock2-fill"
+                viewBox="0 0 16 16">
+                <path d="M7 7a1 1 0 0 1 2 0v1H7V7z" />
+                <path
+                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM10 7v1.076c.54.166 1 .597 1 1.224v2.4c0 .816-.781 1.3-1.5 1.3h-3c-.719 0-1.5-.484-1.5-1.3V9.3c0-.627.46-1.058 1-1.224V7a2 2 0 1 1 4 0z" />
+            </svg>
+        </div>
+    </div>
+    <div class="mb-3 w-100 d-flex align-items-center justify-content-center fs-6 fw-bold">
+        Termos Programa de Demissão Incentivada
+    </div>
+    <div class="w-100  mb-3 bg-termo-container p-3">
+        <ul class="w-100 d-flex align-items-center justify-content-center">
+            <li>
+                <div class="li-title text-left fw-bold">
+                    Decreto municipal N000-000
+                </div>
+                <div class="li-termo text-left ms-3 fw-bold">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia assumenda dignissimos quod veniam
+                    quaerat alias, laudantium eligendi debitis asperiores? Rerum facere quaerat temporibus reiciendis
+                    atque recusandae pariatur, sit totam quam!
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="mb-3 w-100 d-flex bg-termo-container pt-3 align-items-center justify-content-center">
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="acc-1">
+        <label class="form-check-label fw-bold" for="acc-1">
+            Eu li atentamente o decreto municipal N000-00
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="acc-2">
+        <label class="form-check-label fw-bold" for="acc-2">
+            Eu li atentamente as regras e os termos do PDI
+        </label>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/pdi.js"></script>
+</body>
+
+</html>

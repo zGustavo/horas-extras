@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const dbPassword = process.env.PASSWORD;
 
-const sequelize = new Sequelize("pref-horas_extras", "root", `${dbPassword}`, {
+const sequelize = new Sequelize("sistemassalto_prefeitura", "root", `${dbPassword}`, {
   dialect: "mysql",
   host: "localhost",
 });

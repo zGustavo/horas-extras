@@ -98,4 +98,6 @@ router.post("/senha", async (req, res) => {
   }
 });
 
+router.get("/sistema/horas-extras/tutorial", sysGetController.getTutorialFile);
+
 module.exports = router;

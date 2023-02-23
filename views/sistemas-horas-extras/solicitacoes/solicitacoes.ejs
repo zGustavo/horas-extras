@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -29,6 +29,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
     />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
     <link rel="stylesheet" href="/css/layout.css" />
     <link rel="stylesheet" href="/css/solicitacoes.css" />
     <title>SOLICITAÇÕES | Pref. de Salto</title>
@@ -41,324 +42,417 @@
           <%- include('../../layout/navbar') %>
         </div>
         <div
-          class="col-lg-10 d-flex align-items-center justify-content-center p-3 flex-column"
+          class="col-lg-10 d-flex align-items-center justify-content-center p-3 flex-column align-content-start"
           id="content"
         >
-        <% if (user.level === 3) { %>
-            <% if(data){ %>
-                <% for( let s = 0; s < data.length; s++ ) { %>
-                    <div class="mt-2 w-100 border p-3 mb-4 d-flex flex-column" data-setor-nome="<%= data[s].nomeSubSetor %>">
-                        <div class="wrapp d-flex align-items-center justify-content-between">
-                            <div class="fs-5 fw-bold d-flex align-items-center justify-content-start tittle-expand">
-                                <%= data[s].nomeSubSetor %> 
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center button-expand" >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
-                                </svg>                                                                    
-                            </div>
-                        </div>
-                    </div>
-                    <% if (data[s].Funcionarios) { %>
-                     <% for( let j = 0; j < data[s].Funcionarios.length; j++ ) { %>
-                        <div class="row w-100 d-none" style="border-left: 3px solid #8a40b4" data-func-set-nome="<%= data[s].nomeSubSetor %>">
-                            <div class="fw-bold mb-4" style="color: #8a40b4;">
-                                <%= data[s].Funcionarios[j].nome %> 
-                            </div>
-                            <% for( let a = 0; a < data[s].Funcionarios[j].Horas.length; a++ ) { %>
-                                <div class="col-sm-12 col-lg-12 mb-3" data-id="<%= data[s].Funcionarios[j].Horas[a].id %>" data-all-set="<%= data[s].nomeSubSetor %>">
-                                  <div class="row w-100 mb-3">
-                                    <div class="col-sm-12 col-lg-8 d-flex align-items-center justify-content-center">
-                                      <div class="border-bottom" id="wrapper">
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">DATA SOLICITAÇÃO:</p>
-                                          <p><%= `${new Date(data[s].Funcionarios[j].Horas[a].dataDoPedido).toLocaleDateString()}` %></p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">DIA SOLICITADO:</p>
-                                          <p><%= `${new Date(data[s].Funcionarios[j].Horas[a].diaSolicitado).toLocaleDateString()}` %></p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">ENTRADA:</p>
-                                          <p><%= data[s].Funcionarios[j].Horas[a].horarioEntrada %> hora(s)</p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">SAÍDA:</p>
-                                          <p><%= data[s].Funcionarios[j].Horas[a].horarioSaida %> hora(s)</p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">VALOR DE HORAS:</p>
-                                          <p><%= data[s].Funcionarios[j].Horas[a].totalDeHorasPedido %> hora(s)</p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">JUSTIFICATIVA:</p>
-                                          <p><%= data[s].Funcionarios[j].Horas[a].justificativa %></p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">STATUS:</p>
-                                          <p>
-                                            <% if (data[s].Funcionarios[j].Horas[a].status === 0) { %>
-                                             <strong class="text-danger">
-                                              NEGADO
-                                             </strong>
-                                            <% } %>
-                                            <% if (data[s].Funcionarios[j].Horas[a].status === 1 || data[s].Funcionarios[j].Horas[a].status === 2 || data[s].Funcionarios[j].Horas[a].status === 3) { %>
-                                             <strong class="text-primary">
-                                              PENDENTE
-                                             </strong>
-                                            <% } %>
-                                            <% if (data[s].Funcionarios[j].Horas[a].status === 4) { %>
-                                             <strong class="text-success">
-                                              APROVADO
-                                             </strong>
-                                            <% } %>
-                                          </p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="col-sm-12 col-lg-4 d-flex align-items-center justify-content-center">
-                                      <button class="btn btn-success p-2 m-2" data-aprov-id="<%= data[s].Funcionarios[j].Horas[a].id %>">APROVAR</button>
-                                      <button class="btn btn-danger p-2" data-reprov-id="<%= data[s].Funcionarios[j].Horas[a].id %>">REPROVAR</button>
-                                    </div>
-                                  </div> 
-                                </div>
-                                <% } %>                              
-                        </div>
-                    <% } %>
-                    <% } %>
-                    <div class="w-100 d-none" data-aprov-all-set-name="<%= data[s].nomeSubSetor %>">
-                      <div class="d-flex align-items-center justify-content-center">
-                        <button class="btn btn-success p-3 m-2" id="aprov-all">
-                          APROVAR TUDO
+          <% if (user.level === 3) { %>
+          <marquee
+            direction="right"
+            class="p-1 d-flex align-items-center justify-content-start mb-3 w-100"
+          >
+            <% for( let sec = 0; sec < secData.length; sec++ ) { %> <% if
+            (secData[sec].totalHoras > 0) { %>
+            <div
+              class="w-fit d-flex align-items-center justify-content-center flex-row border p-2 rounded"
+            >
+              <p class="me-2">
+                <strong style="color: #8a40b4"
+                  ><%= secData[sec].secretaria %></strong
+                >,
+              </p>
+              <p>
+                <strong>TOTAL HORAS:</strong> <%= secData[sec].totalHoras %>.
+              </p>
+            </div>
+            <% } %> <% } %>
+          </marquee>
+          <% } %> <% if(user.level === 1 || user.level === 2){ %> <% for( let i
+          = 0; i < data.length; i++ ) { %>
+          <div
+            class="mx-auto p-3 d-flex align-items-center justify-content-center flex-column border mb-2 mh-25 wrapper-horas"
+          >
+            <div
+              class="w-100 mb-2 d-flex align-items-center justify-content-between wrapper-header"
+            >
+              <div class="header-text text-dark fw-bold">
+                <%= data[i].nome %>
+              </div>
+              <div class="wrapper-button" data-open="<%= data[i].nome %>">
+                <i class="bi bi-arrow-down-square-fill"></i>
+              </div>
+            </div>
+            <div
+              class="table-responsive w-100 d-none"
+              data-for="<%= data[i].nome %>"
+            >
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">MATRICULA</th>
+                    <th scope="col">NOME</th>
+                    <th scope="col">DATA</th>
+                    <th scope="col">ENTRADA/SAÍDA</th>
+                    <th scope="col">HORA</th>
+                    <th scope="col">JUSTIFICATIVA</th>
+                    <th scope="col">STATUS</th>
+                    <th scope="col">ANEXO</th>
+                    <th scope="col">AÇÃO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for( let h = 0; h < data[i].Horas.length; h++ ) { %>
+                  <tr>
+                    <th scope="row" data-id="<%= data[i].Horas[h].id %>">
+                      <%= data[i].Horas[h].id %>
+                    </th>
+                    <td><%= data[i].matricula %></td>
+                    <td><%= data[i].nome %></td>
+                    <td>
+                      <%= new
+                      Date(data[i].Horas[h].diaSolicitado).toLocaleDateString('pt-BR')
+                      %>
+                    </td>
+                    <td>
+                      <%= data[i].Horas[h].horarioEntrada %>h / <%=
+                      data[i].Horas[h].horarioSaida %>h
+                    </td>
+                    <td><%= data[i].Horas[h].totalDeHorasPedido %> hora(s)</td>
+                    <td class="text-wrap text-break">
+                      <%= data[i].Horas[h].justificativa %>
+                    </td>
+                    <td>
+                      <%= `${data[i].Horas[h].status === 1 ||
+                      data[i].Horas[h].status === 2 || data[i].Horas[h].status
+                      === 3 ? 'PENDENTE' : data[i].Horas[h].status === 0 ?
+                      'NEGADO' : `<strong style='color:blue'>APROVADO</strong>`}` %>
+                    </td>
+                    <td>
+                      <% if (data[i].Horas[h].anexoPedido) { %>
+
+                      <a
+                        href="/sistemas/horas-extras/hora/attachment/<%= data[i].Horas[h].id %>"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        role="button"
+                        class="btn btn-link"
+                        >VISUALIZAR</a
+                      >
+
+                      <% } %>
+                    </td>
+                    <td>
+                      <div>
+                        <button
+                          class="btn btn-success me-1 aprov mb-1"
+                          data-aprov="<%= data[i].Horas[h].id %>"
+                        >
+                          APROVAR
                         </button>
-                        <button class="btn btn-danger p-3 m-2" id="reprov-all">
-                          REPROVAR TUDO
-                        </button>
-                      </div>
-                    </div>
-                <% } %>
-                <% } else{ %>  
-                  <div class="mt-2 d-flex align-items-center justify-content-center flex-column">
-                      <div class="img-header mb-3">
-                          <img src="/assets/img/undraw_joyride_re_968t.svg" alt="yaaay" class="img-fluid">
-                      </div>
-                      <div class="mb-3  d-flex align-items-center justify-content-center fs-3 fw-bold text-dark">
-                          NENHUMA SOLICITAÇÃO!
-                      </div>
-                  </div>
-               <% } %>
-        <% } %>
-        <% if (user.level === 1 || user.level === 2) { %>
-            <% if(data.length){ %>
-                <% for( let s = 0; s < data.length; s++ ) { %>
-                    <div class="mt-2 w-100 border p-3 mb-4 d-flex flex-column" data-setor-nome="<%= data[s].nomeSubSetor %>">
-                        <div class="wrapp d-flex align-items-center justify-content-between">
-                            <div class="fs-5 fw-bold d-flex align-items-center justify-content-start tittle-expand">
-                                <%= data[s].nomeSubSetor %> 
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center button-expand" >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
-                                </svg>                                                                    
-                            </div>
-                        </div>
-                    </div>
-                    <% for( let j = 0; j < data[s].Funcionarios.length; j++ ) { %>
-                        <div class="row w-100 d-none" style="border-left: 3px solid #8a40b4" data-func-set-nome="<%= data[s].nomeSubSetor %>">
-                            <div class="fw-bold mb-4" style="color: #8a40b4;">
-                                <%= data[s].Funcionarios[j].nome %> 
-                            </div>
-                            <% for( let a = 0; a < data[s].Funcionarios[j].Horas.length; a++ ) { %>
-                                <div class="col-sm-12 col-lg-12 mb-3" data-id="<%= data[s].Funcionarios[j].Horas[a].id %>">
-                                  <div class="row w-100 mb-3">
-                                    <div class="col-sm-12 col-lg-8 d-flex align-items-center justify-content-center">
-                                      <div class="border-bottom" id="wrapper">
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">DATA SOLICITAÇÃO:</p>
-                                          <p><%= `${new Date(data[s].Funcionarios[j].Horas[a].dataDoPedido).toLocaleDateString()}` %></p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">DIA SOLICITADO:</p>
-                                          <p><%= `${new Date(data[s].Funcionarios[j].Horas[a].diaSolicitado).toLocaleDateString()}` %></p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">ENTRADA:</p>
-                                          <p><%= data[s].Funcionarios[j].Horas[a].horarioEntrada %> hora(s)</p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">SAÍDA:</p>
-                                          <p><%= data[s].Funcionarios[j].Horas[a].horarioSaida %> hora(s)</p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">VALOR DE HORAS:</p>
-                                          <p><%= data[s].Funcionarios[j].Horas[a].totalDeHorasPedido %> hora(s)</p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">JUSTIFICATIVA:</p>
-                                          <p><%= data[s].Funcionarios[j].Horas[a].justificativa %></p>
-                                        </div>
-                                        <div>
-                                          <p class="fw-bold text-start text-dark">STATUS:</p>
-                                          <p>
-                                            <% if (data[s].Funcionarios[j].Horas[a].status === 0) { %>
-                                             <strong class="text-danger">
-                                              NEGADO
-                                             </strong>
-                                            <% } %>
-                                            <% if (data[s].Funcionarios[j].Horas[a].status === 1 || data[s].Funcionarios[j].Horas[a].status === 2 || data[s].Funcionarios[j].Horas[a].status === 3) { %>
-                                             <strong class="text-primary">
-                                              PENDENTE
-                                             </strong>
-                                            <% } %>
-                                            <% if (data[s].Funcionarios[j].Horas[a].status === 4) { %>
-                                             <strong class="text-success">
-                                              APROVADO
-                                             </strong>
-                                            <% } %>
-                                          </p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="col-sm-12 col-lg-4 d-flex align-items-center justify-content-center">
-                                      <button class="btn btn-success p-2 m-2" data-aprov-id="<%= data[s].Funcionarios[j].Horas[a].id %>">APROVAR</button>
-                                      <button class="btn btn-danger p-2" data-reprov-id="<%= data[s].Funcionarios[j].Horas[a].id %>">REPROVAR</button>
-                                    </div>
-                                  </div> 
-                                </div>
-                                <% } %>                              
-                        </div>
-                    <% } %>
-                    <div class="w-100 d-none" data-aprov-all-set-name="<%= data[s].nomeSubSetor %>">
-                      <div class="d-flex align-items-center justify-content-center">
-                        <button class="btn btn-success p-3 m-2" id="aprov-all">
-                          APROVAR TUDO
-                        </button>
-                        <button class="btn btn-danger p-3 m-2" id="reprov-all">
-                          REPROVAR TUDO
+                        <button
+                          class="btn btn-danger reprov"
+                          data-reprov="<%= data[i].Horas[h].id %>"
+                        >
+                          REPROVAR
                         </button>
                       </div>
-                    </div>
-                <% } %>
-              <% } else{ %>  
-                <div class="mt-2 d-flex align-items-center justify-content-center flex-column">
-                    <div class="img-header mb-3">
-                        <img src="/assets/img/undraw_joyride_re_968t.svg" alt="yaaay" class="img-fluid">
-                    </div>
-                    <div class="mb-3  d-flex align-items-center justify-content-center fs-3 fw-bold text-dark">
-                        NENHUMA SOLICITAÇÃO!
-                    </div>
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+              <div
+                class="w-100 d-flex align-items-center justify-content-center"
+              >
+                <button class="btn btn-success me-1 aprov-all">
+                  APROVAR TODOS
+                </button>
+                <button class="btn btn-danger reprov-all">
+                  REPROVAR TODOS
+                </button>
+              </div>
+            </div>
+          </div>
+          <% } %> <% } %> <% if (user.level === 0 && typeof data !== undefined
+          && data !== null) { %>
+          <div
+            class="mx-auto p-3 d-flex align-items-center justify-content-center flex-column border mb-2 mh-25 wrapper-horas"
+          >
+            <div
+              class="w-100 mb-2 d-flex align-items-center justify-content-between wrapper-header"
+            >
+              <div class="header-text text-dark fw-bold"><%= data.nome %></div>
+              <div class="d-flex align-items-center justify-content-evenly">
+                <div class="text-dark fw-bold me-4">
+                  TOTAL HORAS APROVADAS MÊS:
+                  <strong style="color: #8a40b4"
+                    ><%= data.totalDeHorasMes %></strong
+                  >
                 </div>
-             <% } %>
-        <% } %>
-        <% if (user.level === 0) { %>
-            <% if(data.length){ %>
-                <% for( let s = 0; s < data.length; s++ ) { %>
-                    <div class="mt-2 w-100 border p-3 mb-4 d-flex flex-column" data-setor-nome="<%= data[s].nome %>">
-                        <div class="wrapp d-flex align-items-center justify-content-between">
-                            <div class="fs-5 fw-bold d-flex align-items-center justify-content-start tittle-expand">
-                                <%= data[s].nome %> 
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center button-expand" >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
-                                </svg>                                                                    
-                            </div>
-                        </div>
-                    </div>
-                    <% for( let j = 0; j < data[s].Horas.length; j++ ) { %>
-                        <div class="row w-100 d-none" style="border-left: 3px solid #8a40b4" data-func-set-nome="<%= data[s].nome %>">
-                            <div class="fw-bold mb-4" style="color: #8a40b4;">
-                                <%= data[s].nome %> 
-                            </div>
-                            <div class="col-sm-12 col-lg-12 mb-3" data-id="<%= data[s].Horas[j] %>">
-                              <div class="row w-100 mb-3">
-                                <div class="col d-flex align-items-center justify-content-center flex-column border-bottom">
-                                  <div class="" id="wrapper">
-                                    <div>
-                                      <p class="fw-bold text-start text-dark">DATA SOLICITAÇÃO:</p>
-                                      <p><%= `${new Date(data[s].Horas[j].dataDoPedido).toLocaleDateString()}` %></p>
-                                    </div>
-                                    <div>
-                                      <p class="fw-bold text-start text-dark">DIA SOLICITADO:</p>
-                                      <p><%= `${new Date(data[s].Horas[j].diaSolicitado).toLocaleDateString()}` %></p>
-                                    </div>
-                                    <div>
-                                      <p class="fw-bold text-start text-dark">ENTRADA:</p>
-                                      <p><%= data[s].Horas[j].horarioEntrada %> hora(s)</p>
-                                    </div>
-                                    <div>
-                                      <p class="fw-bold text-start text-dark">SAÍDA:</p>
-                                      <p><%= data[s].Horas[j].horarioSaida %> hora(s)</p>
-                                    </div>
-                                    <div>
-                                      <p class="fw-bold text-start text-dark">VALOR DE HORAS:</p>
-                                      <p><%= data[s].Horas[j].totalDeHorasPedido %> hora(s)</p>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                      <p class="fw-bold text-start text-dark text-break" id="justificativa">JUSTIFICATIVA:</p>
-                                      <p><%= data[s].Horas[j].justificativa %></p>
-                                    </div>
-                                    <div>
-                                      <p class="fw-bold text-start text-dark">STATUS:</p>
-                                      <p>
-                                        <% if (data[s].Horas[j].status === 0) { %>
-                                         <strong class="text-danger">
-                                          NEGADO
-                                         </strong>
-                                        <% } %>
-                                        <% if (data[s].Horas[j].status === 1 || data[s].Horas[j].status === 2 || data[s].Horas[j].status === 3) { %>
-                                         <strong class="text-primary">
-                                          PENDENTE
-                                         </strong>
-                                        <% } %>
-                                        <% if (data[s].Horas[j].status === 4) { %>
-                                         <strong class="text-success">
-                                          APROVADO
-                                         </strong>
-                                        <% } %>
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <% if (data[s].Horas[j].anexoPedido) { %>
-                                   <a href="<%= `/sistemas/horas-extras/hora/attachment/${data[s].Horas[j].id}` %>" target="_blank" rel="noopener noreferrer" class="mb-2 me-auto btn text-light" style="background-color: #8a40b4;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
-                                      <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
-                                    </svg>
-                                    VISUALIZAR ANEXO.
-                                   </a>
-                                  <% } %>
-                                </div>
-                              </div> 
-                            </div>                            
-                        </div>
+                <div
+                  class="wrapper-button d-flex justify-content-center align-content-center"
+                  data-open="<%= data.nome %>"
+                >
+                <i class="bi bi-arrow-down-square-fill"></i>
+              </div>
+            </div>
+            </div>
+            <div
+              class="table-responsive w-100 d-none"
+              data-for="<%= data.nome %>"
+            >
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">MATRÍCULA</th>
+                    <th scope="col">NOME</th>
+                    <th scope="col">DATA</th>
+                    <th scope="col">ENTRADA/SAÍDA</th>
+                    <th scope="col">HORA</th>
+                    <th scope="col">JUSTIFICATIVA</th>
+                    <th scope="col">STATUS</th>
+                    <th scope="col">ANEXO</th>
+                    <th scope="col">AÇÃO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (data !== null || data !== undefined) { %> <% for( let h
+                  = 0; h < data.Horas.length; h++ ) { %>
+                  <tr>
+                    <th scope="row" data-id="<%= data.Horas[h].id %>">
+                      <%= data.Horas[h].id %>
+                    </th>
+                    <td><%= data.matricula %></td>
+                    <td><%= data.nome %></td>
+                    <td>
+                      <%= new
+                      Date(data.Horas[h].diaSolicitado).toLocaleDateString('pt-BR') %>
+                    </td>
+                    <td>
+                      <%= data.Horas[h].horarioEntrada %>h / <%=
+                      data.Horas[h].horarioSaida %>h
+                    </td>
+                    <td><%= data.Horas[h].totalDeHorasPedido %> hora(s)</td>
+                    <td class="text-wrap text-break">
+                      <%= data.Horas[h].justificativa %>
+                    </td>
+                    <td>
+                      <%= `${data.Horas[h].status === 1 || data.Horas[h].status
+                      === 2 || data.Horas[h].status === 3 ? 'PENDENTE' :
+                      data.Horas[h].status === 0 ? 'NEGADO' : 'APROVADO'}` %>
+                    </td>
+                    <td>
+                      <% if (data.Horas[h].anexoPedido) { %>
+
+                      <a
+                        href="/sistemas/horas-extras/hora/attachment/<%= data.Horas[h].id %>"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        role="button"
+                        class="btn btn-link"
+                        >VISUALIZAR</a
+                      >
+
+                      <% } %>
+                    </td>
+                    <% if (data.Horas[h].status > 0 && data.Horas[h].status < 2)
+                    { %>
+                    <td>
+                      <button
+                        class="btn btn-danger fw-bold"
+                        id="cancel-request"
+                        data-req-id="<%= data.Horas[h].id %>"
+                      >
+                        CANCELAR
+                      </button>
+                    </td>
+                    <% } %> <% if (data.Horas[h].status > 1 ||
+                    data.Horas[h].status === 0) { %>
+                    <td>
+                      <button class="btn btn-secondary fw-bold" disabled>
+                        NÃO PERMITIDA
+                      </button>
+                    </td>
                     <% } %>
-                    <div class="w-100 d-none" >
-                      <div class="d-flex align-items-center justify-content-center">
-                        <button class="btn btn-success p-3 m-2" data-aprov-all-set-name="<%= data[s].nomeSubSetor %>">
-                          APROVAR TUDO
+                  </tr>
+                  <% } %> <% } %>
+                </tbody>
+              </table>
+              <div class="text-muted fw-bold mb-3">
+                Em caso de desistência da solicitação de hora extra, é possível
+                efetuar o cancelamento da mesma na coluna AÇÃO desde que não
+                tenha sido APROVADA / REPROVADA. Em caso de dúvidas, procure sua
+                chefia imediata.
+              </div>
+            </div>
+          </div>
+          <% } %> <% if (user.level === 3) { %> <% for( let index = 0; index <
+          data.length; index++ ) { %> <% if (data[index].Funcionarios.length) {
+          %>
+          <div
+            class="mx-auto p-3 d-flex align-items-center justify-content-center flex-column border mb-2 mh-25 wrapper-horas"
+          >
+            <div
+              class="w-100 mb-2 d-flex align-items-center justify-content-between wrapper-header"
+            >
+              <div class="header-text text-dark fw-bold">
+                <%= data[index].nomeSubSetor %>
+              </div>
+              <div
+                class="wrapper-button"
+                data-open="<%= data[index].nomeSubSetor %>"
+              >
+                <i class="bi bi-arrow-down-square-fill"></i>
+              </div>
+            </div>
+            <% for( let f = 0; f < data[index].Funcionarios.length; f++ ) { %>
+            <div
+              class="table-responsive w-100 d-none"
+              data-for="<%= data[index].nomeSubSetor %>"
+            >
+              <div class="fw-bold fs-4 mb-3" style="color: #8a40b4">
+                <%= data[index].Funcionarios[f].nome %>
+              </div>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">MATRICULA</th>
+                    <th scope="col">NOME</th>
+                    <th scope="col">DATA</th>
+                    <th scope="col">ENTRADA/SAÍDA</th>
+                    <th scope="col">HORA</th>
+                    <th scope="col">JUSTIFICATIVA</th>
+                    <th scope="col">STATUS</th>
+                    <th scope="col">ANEXO</th>
+                    <th scope="col">AÇÃO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for( let fh = 0; fh <
+                  data[index].Funcionarios[f].Horas.length; fh++ ) { %>
+                  <tr>
+                    <th
+                      scope="row"
+                      data-id="<%= data[index].Funcionarios[f].Horas[fh].id %>"
+                      data-setor="<%= data[index].nomeSubSetor %>"
+                    >
+                      <%= data[index].Funcionarios[f].Horas[fh].id %>
+                    </th>
+                    <td><%= data[index].Funcionarios[f].matricula %></td>
+                    <td><%= data[index].Funcionarios[f].nome %></td>
+                    <td>
+                      <%= new
+                      Date(data[index].Funcionarios[f].Horas[fh].diaSolicitado).toLocaleDateString('pt-BR')
+                      %>
+                    </td>
+                    <td>
+                      <%= data[index].Funcionarios[f].Horas[fh].horarioEntrada
+                      %>h / <%=
+                      data[index].Funcionarios[f].Horas[fh].horarioSaida %>h
+                    </td>
+                    <td>
+                      <%=
+                      data[index].Funcionarios[f].Horas[fh].totalDeHorasPedido
+                      %> hora(s)
+                    </td>
+                    <td class="text-wrap text-break">
+                      <%= data[index].Funcionarios[f].Horas[fh].justificativa %>
+                    </td>
+                    <td>
+                      <%= `${data[index].Funcionarios[f].Horas[fh].status === 1
+                      || data[index].Funcionarios[f].Horas[fh].status === 2 ||
+                      data[index].Funcionarios[f].Horas[fh].status === 3 ?
+                      'PENDENTE' : data[index].Funcionarios[f].Horas[fh].status
+                      === 0 ? 'NEGADO' : 'APROVADO'}` %>
+                    </td>
+                    <td>
+                      <% if (data[index].Funcionarios[f].Horas[fh].anexoPedido)
+                      { %>
+
+                      <a
+                        href="/sistemas/horas-extras/hora/attachment/<%= data[index].Funcionarios[f].Horas[fh].id %>"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        role="button"
+                        class="btn btn-link"
+                        >VISUALIZAR</a
+                      >
+
+                      <% } %>
+                    </td>
+                    <td>
+                      <div>
+                        <button
+                          class="btn btn-success me-1 aprov mb-1"
+                          data-aprov="<%= data[index].Funcionarios[f].Horas[fh].id %>"
+                        >
+                          APROVAR
                         </button>
-                        <button class="btn btn-danger p-3 m-2" data-reprov-all-set-name="<%= data[s].nomeSubSetor %>">
-                          REPROVAR TUDO
+                        <button
+                          class="btn btn-danger reprov"
+                          data-reprov="<%= data[index].Funcionarios[f].Horas[fh].id %>"
+                        >
+                          REPROVAR
                         </button>
                       </div>
-                    </div>
-                <% } %>
-              <% } else{ %>  
-                <div class="mt-2 d-flex align-items-center justify-content-center flex-column">
-                    <div class="img-header mb-3">
-                        <img src="/assets/img/undraw_joyride_re_968t.svg" alt="yaaay" class="img-fluid">
-                    </div>
-                    <div class="mb-3  d-flex align-items-center justify-content-center fs-3 fw-bold text-dark">
-                        NENHUMA SOLICITAÇÃO!
-                    </div>
-                </div>
-             <% } %>
-        <% } %>
-        
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+              <div
+                class="w-100 d-flex align-items-center justify-content-center"
+              >
+                <button
+                  class="btn btn-success me-1 aprov-all-3"
+                  data-aprov-all-set="<%= data[index].nomeSubSetor %>"
+                >
+                  APROVAR TODOS
+                </button>
+                <button
+                  class="btn btn-danger reprov-all-3"
+                  data-reprov-all-set="<%= data[index].nomeSubSetor %>"
+                >
+                  REPROVAR TODOS
+                </button>
+              </div>
+            </div>
+
+            <% } %>
+          </div>
+
+          <% } %> <% } %> <% } %> <% if (data === undefined || data === null ||
+          !data.length && user.level > 0 && user.level !== 3) { %>
+          <div
+            class="d-flex align-items-center justify-content-center flex-column"
+          >
+            <div class="relative mt-3 mb-3 w-25">
+              <img src="/assets/img/sad.jpg" alt="sad-face" class="img-fluid" />
+            </div>
+            <div class="text-dark fw-bold fs-1 text-center">
+              NENHUMA SOLICITAÇÃO
+            </div>
+          </div>
+          <% } %> <% if (user.level === 3 && !dataLevel3 === true) { %>
+          <div
+            class="d-flex align-items-center justify-content-center flex-column"
+          >
+            <div class="relative mt-3 mb-3 w-25">
+              <img src="/assets/img/pngegg.png" alt="sad-face" class="img-fluid" />
+            </div>
+            <div class="text-dark fw-bold fs-1 text-center">
+              NENHUMA SOLICITAÇÃO
+            </div>
+          </div>
+          <% } %>
+        </div>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/layout.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/js/solicitacoes.js"></script>
   </body>
 </html>

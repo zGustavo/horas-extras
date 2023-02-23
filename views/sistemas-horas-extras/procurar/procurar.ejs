@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -45,137 +45,278 @@
           id="content"
         >
           <div class="mb-3 p-3 text-center">
-            <h1 style="color: #8a40b4;">
-                PROCURAR FUNCIONÁRIO POR MATRÍCULA
-            </h1>
+            <h1 style="color: #8a40b4">PROCURAR FUNCIONÁRIO POR MATRÍCULA</h1>
           </div>
           <div class="mb-3 text-center text-muted">
-            Preencha o campo abaixo com a matrícula do funcionário para poder visualizar algumas informações importantes e poder realizar solicitações de horas extras para o mesmo.
+            Preencha o campo abaixo com a matrícula do funcionário para poder
+            visualizar algumas informações importantes e poder realizar
+            solicitações de horas extras para o mesmo.
           </div>
           <div class="mb-3 w-auto">
-            <label for="matricula" class="form-label fw-bold fs-4">MATRICULA:</label>
-            <input type="text" name="matricula" id="matricula" class="form-control" onchange="getUserFromMat()">
+            <label for="matricula" class="form-label fw-bold fs-4"
+              >MATRICULA:</label
+            >
+            <input
+              type="text"
+              name="matricula"
+              id="matricula"
+              class="form-control"
+              onchange="getUserFromMat()"
+            />
             <div class="form-text text-danger" id="feedback"></div>
           </div>
           <div class="form-control p-3 d-none" id="found-user">
             <div class="row">
-                <div class="col-lg-4 col-sm-12 mb-3">
-                    <label for="matricula-func" class="form-label">MATRICULA:</label>
-                    <input type="text" class="form-control" id="matricula-func" readonly>
-                </div>
-                <div class="col-lg-4 col-sm-12 mb-3">
-                    <label for="nome" class="form-label">NOME:</label>
-                    <input type="text" class="form-control" id="nome" readonly>
-                </div>
-                <div class="col-lg-4 col-sm-12 mb-3">
-                    <label for="funcao" class="form-label">FUNÇÃO:</label>
-                    <input type="text" class="form-control" id="funcao" readonly>
-                </div>
+              <div class="col-lg-4 col-sm-12 mb-3">
+                <label for="matricula-func" class="form-label"
+                  >MATRICULA:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="matricula-func"
+                  readonly
+                />
+              </div>
+              <div class="col-lg-4 col-sm-12 mb-3">
+                <label for="nome" class="form-label">NOME:</label>
+                <input type="text" class="form-control" id="nome" readonly />
+              </div>
+              <div class="col-lg-4 col-sm-12 mb-3">
+                <label for="funcao" class="form-label">FUNÇÃO:</label>
+                <input type="text" class="form-control" id="funcao" readonly />
+              </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-sm-12 mb-3">
-                    <label for="sub-setor" class="form-label">SETOR/SUB SETOR:</label>
-                    <input type="text" class="form-control" id="sub-setor" readonly>
-                </div>
-                <div class="col-lg-4 col-sm-12 mb-3">
-                    <label for="secretaria" class="form-label">SECRETÁRIA:</label>
-                    <input type="text" class="form-control" id="secretaria" readonly>
-                </div>
-                <div class="col-lg-4 col-sm-12 mb-3">
-                    <label for="cpf" class="form-label">CPF:</label>
-                    <input type="text" class="form-control" id="cpf" readonly>
-                </div>
+              <div class="col-lg-4 col-sm-12 mb-3">
+                <label for="sub-setor" class="form-label"
+                  >SETOR/SUB SETOR:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="sub-setor"
+                  readonly
+                />
+              </div>
+              <div class="col-lg-4 col-sm-12 mb-3">
+                <label for="secretaria" class="form-label">SECRETÁRIA:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="secretaria"
+                  readonly
+                />
+              </div>
+              <div class="col-lg-4 col-sm-12 mb-3">
+                <label for="cpf" class="form-label">CPF:</label>
+                <input type="text" class="form-control" id="cpf" readonly />
+              </div>
             </div>
             <div class="row">
-                <div class="col-lg-2 col-sm-12 mb-3">
-                    <label for="data-nascimento" class="form-label">DATA NASCIMENTO:</label>
-                    <input type="text" class="form-control" id="data-nascimento" readonly>
-                </div>
-                <div class="col-lg-2 col-sm-12 mb-3">
-                    <label for="data-admissao" class="form-label">DATA ADMISSÃO:</label>
-                    <input type="text" class="form-control" id="data-admissao" readonly>
-                </div>
-                <div class="col-lg-2 col-sm-12 mb-3">
-                    <label for="tempo-servico" class="form-label">TEMPO DE SERVIÇO:</label>
-                    <input type="text" class="form-control" id="tempo-servico" readonly>
-                </div>
-                <div class="col-lg-3 col-sm-12 mb-3">
-                    <label for="email" class="form-label">EMAIL:</label>
-                    <input type="text" class="form-control" id="email" readonly>
-                </div>
-                <div class="col-lg-3 col-sm-12 mb-3">
-                    <label for="telefone" class="form-label">TELEFONE:</label>
-                    <input type="text" class="form-control" id="telefone" readonly>
-                </div>
+              <div class="col-lg-2 col-sm-12 mb-3">
+                <label for="data-nascimento" class="form-label"
+                  >DATA NASCIMENTO:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="data-nascimento"
+                  readonly
+                />
+              </div>
+              <div class="col-lg-2 col-sm-12 mb-3">
+                <label for="data-admissao" class="form-label"
+                  >DATA ADMISSÃO:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="data-admissao"
+                  readonly
+                />
+              </div>
+              <div class="col-lg-2 col-sm-12 mb-3">
+                <label for="tempo-servico" class="form-label"
+                  >TEMPO DE SERVIÇO:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tempo-servico"
+                  readonly
+                />
+              </div>
+              <div class="col-lg-3 col-sm-12 mb-3">
+                <label for="email" class="form-label">EMAIL:</label>
+                <input type="text" class="form-control" id="email" readonly />
+              </div>
+              <div class="col-lg-3 col-sm-12 mb-3">
+                <label for="telefone" class="form-label">TELEFONE:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="telefone"
+                  readonly
+                />
+              </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-sm-12 mb-3">
-                    <label for="vinculo" class="form-label">VíNCULO:</label>
-                    <input type="text" class="form-control" id="vinculo" readonly>
-                </div>
-                <div class="col-lg-4 col-sm-12 mb-3">
-                    <label for="faltas-abonadas" class="form-label">FALTAS ABONADAS:</label>
-                    <input type="text" class="form-control" id="faltas-abonadas" readonly>
-                </div>
-                <div class="col-lg-4 col-sm-12 mb-3">
-                    <label for="total-horas" class="form-label">TOTAL DE HORAS/MÊS:</label>
-                    <input type="text" class="form-control" id="total-horas" readonly>
-                </div>
+              <div class="col-lg-4 col-sm-12 mb-3">
+                <label for="vinculo" class="form-label">VíNCULO:</label>
+                <input type="text" class="form-control" id="vinculo" readonly />
+              </div>
+              <div class="col-lg-4 col-sm-12 mb-3">
+                <label for="faltas-abonadas" class="form-label"
+                  >FALTAS ABONADAS:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="faltas-abonadas"
+                  readonly
+                />
+              </div>
+              <div class="col-lg-4 col-sm-12 mb-3">
+                <label for="total-horas" class="form-label"
+                  >TOTAL DE HORAS/MÊS:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="total-horas"
+                  readonly
+                />
+              </div>
             </div>
             <div class="row">
-                <div class="col d-flex align-items-center justify-content-center">
-                    <button id="submit-btn" class="btn p-3 fw-bold fs-4 text-light" style="background-color: #8a40b4;" data-bs-toggle="modal" data-bs-target="#modalHora">
-                        SOLICITAR HORA EXTRA PRA ESSE FUNCIONÁRIO
-                    </button>
-                </div>
+              <div class="col d-flex align-items-center justify-content-center">
+                <button
+                  id="submit-btn"
+                  class="btn p-3 fw-bold fs-4 text-light"
+                  style="background-color: #8a40b4"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalHora"
+                >
+                  SOLICITAR HORA EXTRA PRA ESSE FUNCIONÁRIO
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <form action="/sistemas/hora-extra/solicitar/hora" method="post" enctype="multipart/form-data" id="modal-form"> 
-      <div class="modal fade" id="modalHora" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog" >
-          <div class="modal-content" id="modal-body">
-            
+      <form
+        action="/sistemas/hora-extra/solicitar/hora"
+        method="post"
+        enctype="multipart/form-data"
+        id="modal-form"
+      >
+        <div
+          class="modal fade"
+          id="modalHora"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content" id="modal-body">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">SOLICITAÇÃO HORA EXTRA</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                  SOLICITAÇÃO HORA EXTRA
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
               </div>
               <div class="modal-body">
                 <div class="mb-3">
-                  <label for="matricula" class="form-label">MATRICULA FUNCIONÁRIO:</label>
-                  <input type="text" name="matricula" id="matricula-modal" class="form-control" readonly>
+                  <label for="matricula" class="form-label"
+                    >MATRICULA FUNCIONÁRIO:</label
+                  >
+                  <input
+                    type="text"
+                    name="matricula"
+                    id="matricula-modal"
+                    class="form-control"
+                    readonly
+                  />
                 </div>
                 <div class="mb-3">
                   <label for="dia" class="form-label">DIA:</label>
-                  <input type="datetime-local" name="dia" id="dia" class="form-control" min="<%= user.today %>" required>
+                  <input
+                    type="datetime-local"
+                    name="dia"
+                    id="dia"
+                    class="form-control"
+                    min="<%= user.today %>"
+                    required
+                  />
                 </div>
                 <div class="mb-3">
                   <label for="horas" class="form-label">TOTAL DE HORA:</label>
-                  <input type="text" name="horas" id="horas" required class="form-control">
+                  <input
+                    type="text"
+                    name="horas"
+                    id="horas"
+                    required
+                    class="form-control"
+                    placeholder="Apenas números inteiros ou reais. Ex: 1.30 ou 0.50 para minutos."
+                  />
                 </div>
                 <div class="mb-3">
                   <label for="anexo" class="form-label">ANEXO:</label>
-                  <input type="file" name="file" id="anexo" class="form-control">
+                  <input
+                    type="file"
+                    name="file"
+                    id="anexo"
+                    class="form-control"
+                  />
                 </div>
                 <div class="mb-3">
-                  <label for="justificativa" class="form-label">JUSTIFICATIVA:</label>
-                  <textarea name="justificativa" id="justificativa" maxlength="30" class="form-control" required></textarea>
+                  <label for="justificativa" class="form-label"
+                    >JUSTIFICATIVA:</label
+                  >
+                  <textarea
+                    name="justificativa"
+                    id="justificativa"
+                    maxlength="1000"
+                    class="form-control mb-2"
+                    required
+                  ></textarea>
+                  <div class="text-muted">
+                    A justificativa deve conter em forma resumida a
+                    necessidade, explicações sobre qual serviço será efetivado
+                    e outras informações pertinentes.
+
+                    Em caso de intervalo de almoço ou qualquer finalidade, o mesmo deve ser informado na justificativa.
+                  </div>
                 </div>
               </div>
-              <div class="form-text mb-3 text-center modal-feedback">
-              </div>
+              <div class="form-text mb-3 text-center modal-feedback"></div>
               <div class="modal-footer">
-                <button type="button" class="btn modal-req-hour" id="btn-modal-submit">SOLICITAR</button>
-                <button type="button" class="btn btn-secondary">LIMPAR TUDO</button>
+                <button
+                  type="button"
+                  class="btn modal-req-hour"
+                  id="btn-modal-submit"
+                >
+                  SOLICITAR
+                </button>
+                <button type="button" class="btn btn-secondary">
+                  LIMPAR TUDO
+                </button>
               </div>
-            
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/js/layout.js"></script>
     <script src="/js/searchUser.js"></script>
   </body>

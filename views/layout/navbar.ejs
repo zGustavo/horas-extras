@@ -19,11 +19,16 @@
     <div class="menu-items">
       <ul class="list-group d-flex align-items-start justify-content-center">
         <li class="mb-3">
+          <a href="/sistema/horas-extras/main" class="text-dark">
+            <i class="bi bi-house"></i> INICIO
+          </a>
+        </li>
+        <li class="mb-3">
           <a
             href="/sistemas/horas-extras/<%= user.matricula %>/minha-conta"
             class="text-dark"
           >
-            <i class="bi bi-person"></i> MINHA CONTA
+            <i class="bi bi-person"></i> MEUS DADOS
           </a>
         </li>
         <% if (user.level === 0) { %>
@@ -51,6 +56,20 @@
           </a>
         </li>
         <% } %>
+        <li class="mb-3">
+          <a
+            href="/sistema/horas-extras/tutorial"
+            target="_blank"
+            class="text-dark"
+          >
+            <i class="bi bi-card-heading"></i> TUTORIAL
+          </a>
+        </li>
+        <li class="mb-3 log-li">
+          <a href="/sistemas/horas-extras/logout" class="text-dark">
+            <i class="bi bi-power"></i> SAIR
+          </a>
+        </li>
       </ul>
     </div>
   </div>

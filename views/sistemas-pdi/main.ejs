@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/cddaf0c0ff.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,700;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,300;1,700&family=Poppins:wght@200;300;400;500;600;700&family=Roboto+Flex:opsz,wght@8..144,300;8..144,500;8..144,700;8..144,900&family=Roboto:wght@300;500;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="/css/pdi-main.css" />
+    <title>PDI - Pref. de Salto</title>
+</head>
+<style>
+    #menu-btn-toggler,
+    #go-back {
+        display: none;
+    }
+
+    li {
+        background-color: #b6f1ac;
+        border: 1px solid #2bf20a;
+        color: #f90606;
+    }
+
+    @media screen and (max-width: 1297px) {
+        .container {
+            width: 75%;
+        }
+
+        header {
+            display: none;
+        }
+    }
+
+    @media screen and (min-width: 1297px) {
+        .container {
+            width: 33%;
+            padding: 1.5em;
+        }
+
+    }
+</style>
+<%- include('../layout/header.ejs') %>
+<div class="container mt-2">
+    <div class="w-100 text-center">
+        <p class="h3">Programa de Demissão Incentivada</p>
+    </div>
+    <div class="w-100 text-justify px-3 mb-3">
+        <p class="text-muted">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam, illo omnis? Excepturi optio, cum neque unde
+            dignissimos voluptates inventore assumenda accusantium quod ea? Perferendis, mollitia nam qui magnam
+            eligendi aliquam?
+        </p>
+    </div>
+    <div class="form-group px-3 mb-3">
+        <label for="matricula" class="form-label text-secondary h6">MATRICULA:</label>
+        <input type="text" name="matricula" id="matricula" class="form-control p-3" readonly placeholder="106640">
+    </div>
+    <div class="form-group px-3 mb-3">
+        <label for="nome" class="form-label text-secondary h6">NOME:</label>
+        <input type="text" name="nome" id="nome" class="form-control p-3" readonly placeholder="GUSTAVO GUERREIRO LIMA DIAS DA SILVA">
+    </div>
+    <div class="form-group mb-3 px-3">
+        <label for="" class="form-label text-secondary h6">
+            DADOS:
+        </label>
+    </div>
+    <div class="form-group row px-3 mb-3">
+        <div
+            class="col border border-muted rounded d-flex align-items-center justify-content-center flex-column p-1 m-2">
+            <p class="text-secondary">
+                Data de admissão:
+            </p>
+            <p class="text-secondary">
+                14/03/2022
+            </p>
+        </div>
+        <div
+            class="col border border-muted rounded d-flex align-items-center justify-content-center flex-column p-1 m-2">
+            <p class="text-secondary">
+                Tempo de serviço:
+            </p>
+            <p class="text-secondary">
+                35 anos
+            </p>
+        </div>
+    </div>
+    <div class="form-group mx-5 bm-3 mb-3 w-75 d-flex align-items-center justify-content-center w-fit">
+        <ul class="list-group w-100">
+            <li
+                class="list-group-items list-group-item-success  rounded d-flex align-items-center justify-content-center p-3 text-danger fw-bold text-center">
+                Você se enquadra a 1ª rodada do PDI.
+            </li>
+        </ul>
+    </div>
+    <div class="bg-light w-100 p-2 d-flex align-items-center justify-content-center flex-column rounded">
+        <div class="w-100 mb-2 d-flex align-items-center justify-content-center flex-column border-top border-bottom">
+            <div class="d-flex align-items-center justify-content-between w-100 p-3">
+                <div class="text-muted">Referência Salarial:</div>
+                <div class="text-secondary fw-bold">(CF-2) R$ 2.150</div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between w-100 p-3">
+                <div class="text-muted">Indenização aderindo PDI:</div>
+                <div class="text-danger fw-bold">R$ 75.250,00</div>
+            </div>
+        </div>
+        <div class="w-100 px-3 d-flex align-items-center justify-content-center">
+            <span class="align-baseline p-2 text-left">
+                Para entrar na lista do <strong>PDI</strong> é necessário ler atentamente todos os termos e requisitos
+                do programa, clique no botão a seguir para ler os termos.
+            </span>
+        </div>
+        <div class="w-100 d-flex align-items-center justify-content-center mx-auto mt-2">
+            <a class="btn btn-primary w-100 p-3 fw-bold" id="btn-next" href="/pdi/termos">
+                Prosseguir com o pedido
+            </a>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/pdi.js"></script>
+
+</body>
+
+</html>

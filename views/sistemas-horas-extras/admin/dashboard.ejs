@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -38,6 +38,7 @@
       href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
     <link rel="stylesheet" href="/css/layout.css" />
     <link rel="stylesheet" href="/css/dashboard.css" />
     <title>Dashboard | Pref. de Salto</title>
@@ -46,6 +47,9 @@
     <div class="container-fluid">
       <%- include('../../layout/header') %>
       <div class="row mb-3 p-lg-5">
+        <div class="col-lg-2 col-sm-0" id="menu-col">
+          <%- include('../../layout/navbar') %>
+        </div>
         <div
           class="container-fluid col-lg-10 d-flex align-items-center justify-content-center p-3 flex-column"
           id="content"
@@ -64,7 +68,7 @@
               id="box"
             >
               <div
-                class="col-lg-3 col-sm-12 mx-1 align-self-center d-flex align-items-center justify-content-start flex-column shadow-sm-1 p-3 h-100 card-all-section"
+                class="col-lg-3 col-sm-12 mx-1 align-self-center d-flex align-items-center justify-content-start flex-column shadow-sm-1 p-3  card-all-section"
                 id="container"
               >
                 <div class="mb-3 w-100 text-center">
@@ -146,6 +150,88 @@
                 </form>
               </div>
               <div
+                class="col-lg-3 col-sm-12 mx-1 align-self-center d-flex align-items-center justify-content-start flex-column shadow-sm-1 p-3 mb-2 card-all-section"
+                id="container"
+              >
+                <div class="mb-3 w-100 text-center">
+                  <p class="text-dark fw-bold fs-3">RELATÓRIO POR SETOR</p>
+                </div>
+                <form class="mb-3 w-100" id="admin-setor-rel">
+                  <div class="mb-3 w-100">
+                    <label
+                      for="sel-setores"
+                      class="form-label w-100 fw-bold fs-4"
+                      style="color: #8a40b4"
+                    >
+                      ESCOLHA O SETOR:
+                    </label>
+                    <select name="setor" id="sel-setor" class="w-100">
+                      <option value="null" selected></option>
+                      <% for( let i = 0; i < setor.length; i++ ) { %>
+                      <option value="<%= setor[i].id %>">
+                        <%= setor[i].nomeSubSetor %>
+                      </option>
+                      <% } %>
+                    </select>
+                  </div>
+                  <div class="w-100 mb-3">
+                    <div class="w-100 text-start">
+                      <p class="fw-bold fs-4" style="color: #8a40b4">FILTRO:</p>
+                    </div>
+                    <div class="time">
+                      <div class="time-title p-2">
+                        <p class="text-dark fw-bold">TEMPO:</p>
+                        <div class="form-check form-check-inline">
+                          <input
+                            type="radio"
+                            name="filter"
+                            id="all-setor"
+                            class="form-check-input"
+                            value="all"
+                            checked
+                          />
+                          <label for="all-setor" class="form-check-label">TUDO</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            type="radio"
+                            name="filter"
+                            id="mes-setor"
+                            class="form-check-input"
+                            value="mes"
+                          />
+                          <label for="mes-setor" class="form-check-label"
+                            >MÊS ATUAL</label
+                          >
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            type="radio"
+                            name="filter"
+                            id="ano-setor"
+                            class="form-check-input"
+                            value="ano"
+                          />
+                          <label for="ano-setor" class="form-check-label"
+                            >ANO ATUAL</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="w-100 mb-3 mt-3">
+                      <button
+                        type="button"
+                        class="btn w-100 p-3 fw-bold rounded mt-5"
+                        style="background-color: #8a40b4; color: #f7f7f7"
+                        id="v-setor-rel"
+                      >
+                        VISUALIZAR RESULTADO
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div
                 class="col-lg-3 col-sm-12 m-2 align-self-center d-flex h-100 align-items-center justify-content-start flex-column shadow-sm-1 p-3 h-100 card-all-section"
                 id="container"
               >
@@ -169,8 +255,31 @@
                   </button>
                 </div>
               </div>
-
-              
+              <div
+                class="col-lg-3 col-sm-12 m-2 align-self-center d-flex h-100 align-items-center justify-content-start flex-column shadow-sm-1 p-3 h-100 card-all-section"
+                id="container-fechamento"
+              >
+                <div class="mb-3 w-100 text-center">
+                  <p class="text-dark fw-bold fs-3 p-5">
+                    FECHAMENTO MENSAL
+                  </p>
+                </div>
+                <div
+                  class="text-muted d-flex align-items-center fs-5 my-5 p-1 mb-3 justify-content-center"
+                >
+                  Redireciona para a página de fechamento mensal do sistema. Liberado todo dia 16 de cada mês.
+                </div>
+                <div class="w-100">
+                  <a
+                    class="btn w-100 fw-bold p-3 my-4 cad-func-btn"
+                    type="button"
+                    href=""
+                    id="fechamento-btn"
+                  >
+                    IR PARA FECHAMENTO
+                </a>
+                </div>
+              </div>
           </div>
         </div>
       </div>
@@ -188,7 +297,7 @@
       </div>
       <div class="my-modal-title"></div>
       <div class="text-muted modal-filter-info"></div>
-      <div class="table-responsive wrapper-body"></div>
+      <div class="table-responsive wrapper-body-func"></div>
       <div
         class="w-100 mt-3 d-flex align-items-center justify-content-end my-modal-footer"
       >
@@ -266,9 +375,6 @@
                     id="senha"
                     class="form-control"
                   />
-                  <div class="toggle-pass-visibility">
-                    <i class="bi bi-eye-slash-fill"></i>
-                  </div>
                 </div>
                 <div class="col mb-3">
                   <label for="data-admissao" class="form-label"
@@ -324,6 +430,28 @@
                     type="text"
                     name="setID"
                     id="setID"
+                    class="form-control num"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="chefiaId" class="form-label">CHEFIA ID:</label>
+                  <input
+                    type="text"
+                    name="chefiaId"
+                    id="chefiaId"
+                    class="form-control num"
+                    required
+                  />
+                </div>
+                <div class="col mb-3">
+                  <label for="secretarioId" class="form-label">SECRETÁRIO ID:</label>
+                  <input
+                    type="text"
+                    name="secretarioId"
+                    id="secretarioId"
                     class="form-control num"
                     required
                   />
@@ -389,10 +517,30 @@
         </div>
       </div>
     </div>
+    <div
+      class="d-none position-fixed top-50 start-50 translate-middle bg-light shadow p-3"
+      id="rel-modal-setor"
+    >
+      <div class="text-center fw-bold fs-4 text-dark">
+        ESPELHO DE RELATÓRIO:
+      </div>
+      <div class="my-modal-title-setor"></div>
+      <div class="text-muted modal-filter-info-setor"></div>
+      <div class="table-responsive wrapper-body-setor"></div>
+      <div
+        class="w-100 mt-3 d-flex align-items-center justify-content-end my-modal-footer"
+      >
+        <button type="button" class="btn m-2" id="generate_xlsx_setor">
+          GERAR RELATÓRIO
+        </button>
+        <button type="button" class="btn" id="close-modal-setor">FECHAR</button>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/js/layout.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/js/dashboard.js"></script>
   </body>
 </html>

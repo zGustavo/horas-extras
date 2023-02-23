@@ -3,6 +3,8 @@ const Setor = require("../../model/setor");
 const SubSetor = require("../../model/subSetor");
 const Funcionario = require("../../model/funcionario");
 const bcrypt = require("bcryptjs");
+const Horas = require("../../model/horas");
+const util = require("../../config/functions");
 
 // criação secretaria
 exports.createSec = async (req, res) => {
@@ -104,13 +106,18 @@ exports.criaFuncionario = async (req, res) => {
       cargoC,
       cargoO,
       vinculo,
-      setID,
       salEf,
       salCom,
       tel,
       level,
       admissao,
+      setID,
+      chefiaId,
+      secretarioId,
     } = req.body;
+
+    let chefia;
+    let secretario;
 
     if (senha === "") {
       senha = cpf.replace(/\D/g, "");
@@ -127,6 +134,24 @@ exports.criaFuncionario = async (req, res) => {
     if (oldFunc)
       return res.status(400).json({ message: "FUNCIONÁRIO JÁ EXISTE." });
 
+    if (chefiaId) {
+
+       chefia = await Funcionario.findOne({
+        where: {
+          id: chefiaId,
+        },
+      });
+    }
+
+    if (secretarioId) {
+
+       secretario = await Funcionario.findOne({
+        where: {
+          id: secretarioId,
+        },
+      });
+    }
+
     const newFunc = await Funcionario.create({
       matricula: mat,
       nome: name,
@@ -142,6 +167,8 @@ exports.criaFuncionario = async (req, res) => {
       telefone: tel ? tel : null,
       dataAdmissao: new Date(admissao),
       SubSetorId: setID,
+      chefiaId: chefia ? chefia.id : null,
+      secretarioId: secretario ? secretario.id : null,
     });
 
     return res
@@ -152,5 +179,48 @@ exports.criaFuncionario = async (req, res) => {
     res
       .status(400)
       .json({ message: "ERRO AO CADASTRAR FUNCIONÁRIO. " + error.name });
+  }
+};
+
+exports.fechamentoGeraLinkRel = async (req, res) => {
+  const { array } = req.params;
+
+  try {
+    const ids = array.split(",");
+
+    const numberedIds = ids.map((id) => Number(id));
+
+    const hours = await Horas.findAll({
+      where: { id: numberedIds },
+      include: [{ model: Funcionario, include: [SubSetor] }],
+    });
+
+    const file = await util.createFechamentoRel(hours);
+    const splitFile = file.split("\\");
+    const fileName = splitFile[splitFile.length - 1];
+
+    const funcs = await Funcionario.findAll();
+
+    funcs.forEach(async (func) => {
+      await func.update({
+        totalDeHorasMes: 0,
+      });
+
+      await func.save();
+    });
+
+    hours.forEach(async (hour) => {
+      await hour.update({
+        ativo: "NAO",
+      });
+
+      await hour.save();
+    });
+
+    let link = `/sistema/hora-extra/admin/fechamento/get/${fileName}`;
+
+    res.status(200).json({ message: "FECHAMENTO EFETUADO", link: link });
+  } catch (error) {
+    console.log(error);
   }
 };

@@ -19,3 +19,12 @@ exports.authRoutes = async (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.isAdmin = (req, res, next) => {
+  if (req.user.user.level !== 3) {
+    res.status(403).send("<h1>NÃO AUTORIZADO</h1>");
+    return;
+  }
+
+  return next();
+};

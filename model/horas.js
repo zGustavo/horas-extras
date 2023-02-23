@@ -45,6 +45,10 @@ const Horas = sequelize.define(
     anexoPedido: {
       type: Sequelize.STRING,
     },
+    ativo: {
+      type: Sequelize.STRING,
+      default: "SIM",
+    },
   },
   { freezeTableName: true }
 );

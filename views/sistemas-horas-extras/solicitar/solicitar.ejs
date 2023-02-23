@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -70,6 +70,7 @@
                       id="matricula"
                       class="form-control"
                       value="<%= user.matricula %>"
+                      readonly
                     />
                   </div>
                   <div class="mb-3" id="form-day-group">
@@ -96,16 +97,17 @@
                       name="horas"
                       id="horas"
                       class="form-control"
-                      placeholder="Ex: 1.30 ou 0.50 para minutos."
+                      placeholder="Apenas números inteiros ou decimais. Ex: 1.30 ou 0.50 para minutos."
                       pattern="[+-]?([0-9]*[.])?[0-9]+"
                       required
                       min="0"
                       max="10"
+                      onkeydown="changeToDot(event)"
                     />
                     <div class="form-text">
-                      De Segunda à Sexta-Feira é permitido até 2 horas/pedido,
+                      De Segunda a Sexta-Feira é permitido até 2 horas/pedido,
                       finais de semanas até 10 horas/pedido. Valores que não são
-                      equivalentes à horas e minutos (ex: 1.80) não serão
+                      equivalentes a horas e minutos (ex: 1.80) não serão
                       permitidos.
                     </div>
                   </div>
@@ -131,12 +133,14 @@
                       id="justificativa"
                       class="form-control"
                       required
-                      maxlength="20"
+                      maxlength="1000"
                     ></textarea>
                     <div class="text-muted">
                       A justificativa deve conter em forma resumida a
                       necessidade, explicações sobre qual serviço será efetivado
                       e outras informações pertinentes.
+
+                      Em caso de intervalo de almoço ou qualquer finalidade, o mesmo deve ser informado na justificativa.
                     </div>
                   </div>
                   <div class="mb-3">
@@ -156,6 +160,7 @@
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/js/layout.js"></script>
     <script src="/js/request.js"></script>
   </body>
